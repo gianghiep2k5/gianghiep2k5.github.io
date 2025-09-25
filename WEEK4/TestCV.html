@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio – Giang Hiệp</title>
+
+  <style>
+    /* ========= Theme ========= */
+    :root{
+      --bg: #0f1220;
+      --card: #151a2f;
+      --muted: #8791af;
+      --text: #e6e9f5;
+      --brand: #6ea8fe;
+      --brand-2: #a18cff;
+      --ring: rgba(110,168,254,.35);
+      --radius: 16px;
+      --maxw: 1100px;
+      --nav-h: 56px;
+    }
+    *{ box-sizing: border-box; }
+    html{ scroll-behavior: smooth; }
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #1a2042 0%, transparent 40%),
+        radial-gradient(1000px 500px at 110% 0%, #25184a 0%, transparent 45%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ========= Sticky Top Nav ========= */
+    nav{
+      position: sticky; top: 0; z-index: 1000;
+      height: var(--nav-h);
+      display: flex; align-items: center;
+      backdrop-filter: saturate(140%) blur(8px);
+      background: rgba(10,12,26,.6);
+      border-bottom: 1px solid rgba(135,145,175,.18);
+    }
+    nav ul{
+      margin: 0 auto; padding: 0 16px;
+      display: flex; gap: 8px; list-style: none;
+      max-width: var(--maxw); width: 100%;
+      justify-content: center; flex-wrap: wrap;
+    }
+    nav a{
+      display:inline-block; padding:10px 14px;
+      text-decoration:none; color:var(--text);
+      border-radius:10px; font-weight:600; letter-spacing:.2px;
+      transition:.2s ease;
+    }
+    nav a:hover{
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 0 0 3px var(--ring);
+      transform: translateY(-1px);
+    }
+
+    /* Active link khi cuộn tới section (dùng :target) */
+    nav a[aria-current="page"],
+    nav a.active{
+      background: rgba(255,255,255,.08);
+      box-shadow: 0 0 0 3px var(--ring);
+    }
+
+    /* ========= Layout ========= */
+    .container{
+      max-width: var(--maxw);
+      margin: 28px auto 64px;
+      padding: 0 18px;
+    }
+    .section{ margin: 28px 0; scroll-margin-top: calc(var(--nav-h) + 20px); }
+    article{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid rgba(135,145,175,.18);
+      border-radius: var(--radius);
+      padding: 22px 22px;
+      box-shadow:
+        0 10px 30px rgba(0,0,0,.25),
+        0 1px 0 rgba(255,255,255,.08) inset;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    article:hover{
+      transform: translateY(-2px);
+      border-color: rgba(110,168,254,.45);
+      box-shadow:
+        0 16px 38px rgba(0,0,0,.32),
+        0 0 0 1px rgba(110,168,254,.25) inset;
+    }
+
+    /* ========= Typography ========= */
+    .section header h1, .section header h2{
+      margin: 0 0 8px; line-height: 1.2;
+    }
+    .section header h1{ font-size: clamp(24px, 3.4vw, 32px); }
+    .section header h2{ font-size: clamp(20px, 2.8vw, 26px); color: var(--brand); }
+    .section header p{ margin: 0 0 10px; color: var(--muted); }
+    .subhead{
+      display:block; margin: 6px 0 10px;
+      font-weight:700; letter-spacing:.3px; color: var(--brand-2);
+    }
+
+    /* ========= Links in content ========= */
+    article a{
+      color: var(--brand);
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(110,168,254,.55);
+      transition: color .18s ease, border-color .18s ease;
+      word-break: break-word;
+    }
+    article a:hover{
+      color: #cfe0ff;
+      border-color: rgba(110,168,254,.9);
+    }
+
+    /* ========= Lists ========= */
+    ul{ padding-left: 1.2rem; }
+    .list-none{ list-style: none; padding-left: 0; }
+
+    /* ========= Footer ========= */
+    footer{
+      margin-top: 36px; padding: 18px; text-align: center;
+      color: var(--muted);
+      border-top: 1px solid rgba(135,145,175,.18);
+      background: rgba(10,12,26,.45);
+      border-radius: 14px;
+    }
+
+    /* ========= Small enhancements ========= */
+    .pill{
+      display:inline-block; padding:6px 10px; border-radius:999px;
+      background: rgba(255,255,255,.06); color: var(--text);
+      border: 1px solid rgba(135,145,175,.2); font-size: 14px;
+    }
+
+    /* ========= Responsive tweaks ========= */
+    @media (max-width: 520px){
+      nav ul{ justify-content: space-between; gap:4px; }
+      nav a{ padding: 8px 10px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVIGATION -->
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skill">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE -->
+  <div class="container">
+    <!-- ABOUT -->
+    <header id="about" class="section">
+      <article>
+        <header>
+          <h1>Giang Hiệp</h1>
+          <p class="subhead">Designer</p>
+          <p class="subhead">No gain, no pain</p>
+          <span class="pill">Portfolio</span>
+        </header>
+      </article>
+    </header>
+
+    <main>
+      <!-- EDUCATION -->
+      <section id="education" class="section">
+        <article>
+          <header>
+            <h1>
+              <!-- Giữ nguyên link gốc của bạn, lưu ý đường dẫn ổ đĩa D: chỉ hoạt động trên máy bạn -->
+              <a href="D:\WEB\PhuongVu51.github.io\WEEK4\ex6.html">Education</a>
+            </h1>
+            <p class="subhead">After high school</p>
+          </header>
+
+          <p>International University | 2023 - nay</p>
+          <p>Part-time job | 2023 - nay</p>
+
+          <p class="subhead">High school</p>
+          <p>Trần Quang Khải High School | 2020 - 2023</p>
+        </article>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section id="experience" class="section">
+        <article>
+          <header>
+            <h1><a href="/WEEK3/cv.png">Work experience</a></h1>
+          </header>
+
+          <p class="subhead">Làm việc 3 năm tại VNUIS</p>
+          <ul>
+            <li>Thủ khoa đầu vào</li>
+            <li>Sinh viên 5 tốt</li>
+            <li>Học bổng toàn phần</li>
+            <li>7.5 IELTS</li>
+          </ul>
+
+          <p class="subhead"><strong>Web Developer</strong></p>
+          <ul>
+            <li>Làm việc tại FPT Software</li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- SKILLS -->
+      <section id="skill" class="section">
+        <article>
+          <header>
+            <h1><a href="/WEEK2/IntroPage.html">Skills</a></h1>
+          </header>
+          <p class="subhead">Làm BA cho FPT Software</p>
+          <ul>
+            <li>Figma</li>
+            <li>Photoshop</li>
+            <li>Illustrator</li>
+            <li>InDesign</li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="section">
+        <article>
+          <header>
+            <h1><a href="/WEEK3/index.html">Contact</a></h1>
+          </header>
+          <ul class="list-none">
+            <li>Email: 23070691@vnu.edu.vn</li>
+            <li>Phone: 0374140705</li>
+            <li>Facebook: Giang Hiệp</li>
+            <li>Instagram: _peih.g</li>
+          </ul>
+        </article>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>Mọi chi tiết xin liên hệ...</p>
+      <p>Created by using HTML and CSS</p>
+    </footer>
+  </div>
+
+  <!-- Nhỏ gọn: set active link theo :target (không cần JS) -->
+  <script>
+    // Tô sáng link đang xem (fallback cho trình duyệt không hỗ trợ :target tốt)
+    const links = document.querySelectorAll('nav a');
+    function setActive(){
+      const hash = window.location.hash || '#about';
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash));
+    }
+    window.addEventListener('hashchange', setActive);
+    window.addEventListener('DOMContentLoaded', setActive);
+  </script>
+</body>
+</html>
