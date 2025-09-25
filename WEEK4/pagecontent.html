@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simple Website</title>
+  <!-- optional favicon (slide 5) -->
+  <!-- <link rel="icon" href="/favicon.ico" /> -->
+  <style>
+    :root {
+      --dark: #444;
+      --light: #d9d9d9;
+      --lighter: #e6e6e6;
+      --text: #222;
+      --white: #fff;
+    }
+
+	○  { box-sizing: border-box; }
+    html, body { margin:0; padding:0; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--lighter);
+      line-height: 1.6;
+    }
+
+    /* NAV (slide 11–13 style) */
+    nav#topmenu { background: var(--dark); }
+    nav#topmenu ul {
+      list-style: none;
+      margin: 0; padding: 0;
+      display: flex; justify-content: center; gap: 48px;
+      height: 56px; align-items: center;
+    }
+    nav#topmenu a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 18px;
+    }
+    nav#topmenu a:hover { text-decoration: underline; }
+
+    /* HEADER */
+    ⁦header.site⁩-header {
+      display:none; /* màn hình mẫu không có banner riêng */
+    }
+
+    /* LAYOUT: MAIN + (ASIDE để sẵn theo slide 20) */
+    main {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      background: var(--light);
+      padding: 24px 28px;
+      min-height: 420px;
+    }
+
+    /* SECTION + ARTICLE (slide 18–19) */
+    section.blog { }
+    article.post { margin: 0 0 28px 0; }
+    article.post h1 {
+      margin: 0 0 8px 0;
+      font-size: 28px; /* slide 19 */
+    }
+    article.post header p.meta {
+      margin: 0 0 14px 0;
+      font-style: italic; /* slide 19 */
+    }
+    article.post p { font-size: 20px; }
+
+    /* FOOTER (slide 21) */
+    ⁦footer.site⁩-footer {
+      background: var(--dark);
+      color: var(--white);
+      text-align: center;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+
+    /* Responsive nhỏ gọn */
+    @media (min-width: 900px) {
+      main {
+        grid-template-columns: 1fr 300px; /* nội dung + sidebar (aside) */
+        align-items: start;
+      }
+      aside.sidebar {
+        background: #f2f2f2;
+        padding: 16px;
+        border-radius: 6px;
+      }
+      aside.sidebar h2 { margin-top: 0; font-size: 18px; }
+      aside.sidebar ul { margin: 0; padding-left: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav id="topmenu">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Tutorials</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Newsletter</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN CONTENT AREA -->
+  <main>
+    <!-- BLOG CONTENT -->
+    <section class="blog" aria-label="Blog posts">
+      <article class="post">
+        <header>
+          <h1>Just Another Day</h1>
+          <p class="meta">Written by Christina on January 11th</p>
+        </header>
+        <p>This is my second blog entry, and I just wanted to check in on you</p>
+      </article>
+
+      <article class="post">
+        <header>
+          <h1>My First Blog Entry</h1>
+          <p class="meta">Written by Christina on January 10th</p>
+        </header>
+        <p>I’m so happy to write my first blog entry – yay!</p>
+      </article>
+    </section>
+
+    <aside class="sidebar" aria-label="Sidebar">
+      <h2>Blogroll</h2>
+      <ul>
+        <li><a href="#">My Friend</a></li>
+        <li><a href="#">My Other Friend</a></li>
+        <li><a href="#">My Best Friend</a></li>
+      </ul>
+    </aside>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    &copy; Copyright 2009 Your name
+  </footer>
+</body>
+</html>

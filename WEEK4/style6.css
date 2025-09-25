@@ -1,0 +1,36 @@
+body{
+    margin: 0;
+    padding: 0;
+    background: #ccc;
+}
+
+nav{
+    margin: 0;
+    padding: 0;
+    background: #444;
+    text-align: center;
+    list-style: none;
+}
+nav ul li{
+    font-size: 24px;
+    padding: 0;
+    line-height: 40px;
+    height: 40px;
+    display: inline-block;
+    padding: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+nav ul li a:hover{
+    color: pink;
+    text-decoration: underline;
+}
+
+article header :hover{
+    color: plum;
+    font-size: 20px;
+}
