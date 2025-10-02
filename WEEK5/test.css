@@ -1,0 +1,28 @@
+nav{
+    margin: 0;
+    padding: 0;
+    background: rgb(2, 107, 87);
+    text-align: center;
+    list-style: none;
+}
+nav ul li{
+    font-size: 20px;
+    padding: 0;
+    line-height: 40px;
+    height: 40px;
+    display: inline-block;
+    padding: 20px;
+}
+footer{
+    background: #444;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
