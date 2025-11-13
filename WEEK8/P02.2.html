@@ -1,0 +1,23 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Circle</title>
+<script language="javascript">
+var radius = prompt("Enter the radius of the circle:");
+
+if(radius == null || radius == "" || isNaN(radius))
+    document.write("<font color='red'>Radius is invalid!</font>");
+else {
+    var pi = 3.14;
+    var perimeter = 2 * pi * parseFloat(radius);
+    var area = pi * parseFloat(radius) * parseFloat(radius);
+    document.write("<font color='blue'><b>Circle Information:</b></font><br>");
+    document.write("Radius = " + radius + "<br>");
+    document.write("Perimeter = " + perimeter + "<br>");
+    document.write("Area = " + area);
+}
+</script>
+</head>
+<body>
+</body>
+</html>

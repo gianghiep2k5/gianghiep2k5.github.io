@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore</title>
+    <link rel="stylesheet" href="/WEEK5/test.css">
+    <link rel="stylesheet" href="/WEEK8/newcv.css">
+</head>
+<body>
+    <nav>
+        <ul>
+           <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#work experience">Work experience</a></li>
+            <li><a href="#skill">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
+        <!--header-->
+        <section id="about" class="section">
+        <header>
+            <h1>Giang Hiệp</h1>
+        </header>
+        <main>
+            <section>
+                <article>
+                    <header>
+                        <h1>Designer</h1>
+                    </header>
+                    <tieu_de_phu>
+                        No gain, no pain
+                    </tieu_de_phu>
+                </article>
+            </section>
+        </main>
+       </section>
+       
+        <!--Education-->
+        <main>
+            <section id="education" class="section">
+                <article>
+                    <header>
+                        <h1><a href="/WEEK4/Final_CV.html">Education</a></h1>
+                    </header>
+                    <tieu_de_phu>
+                        After high school
+                    </tieu_de_phu>
+                    <p>International Univesity | 2023 - nay</p>
+                    <p>Part time job | 2023 - nay</p>
+                    <tieu_de_phu>
+                        High school
+                    </tieu_de_phu>
+                    <p>Trần Quang Khải high school | 2020 - 2023</p>
+                </article>
+            </section>
+        </main>
+        
+        <!--Experience-->
+        <main>
+            <section id="work experience" class="section">
+                <article>
+                    <header>
+                        <h1><a href="/WEEK3/cv.png">Work experience</a></h1>
+                    </header>
+                    <tieu_de_phu>
+                        Làm việc 3 năm tại VNUIS
+                    </tieu_de_phu>
+                    <ul type="disc">
+                        <li>Thủ khoa đầu vào</li>
+                        <li>Sinh viên 5 tốt</li>
+                        <li>Học bổng toàn phần</li>
+                        <li>7.5 IELTS</li>
+                    </ul>
+
+                    <tieu-de-phu>
+                        <strong>Web developer</strong>
+                    </tieu-de-phu>
+                    <ul type="disc">
+                        <li>Làm việc tại FPT software</li>
+                    </ul>
+                </article>
+            </section>
+        </main>
+        
+        <!--Skills-->
+        <main>
+            <section id="skill" class="section">
+                <article>
+                    <header>
+                        <h1><a href="/WEEK2/IntroPage.html">Skills</a></h1>
+                    </header>
+                    <tieu_de_phu>
+                        Làm BA cho FPT software
+                    </tieu_de_phu>
+                    <ul type="disc">
+                        <li>Figma</li>
+                        <li>Photoshop</li>
+                        <li>Illutrator</li>
+                        <li>Indesign</li>
+                    </ul>
+                </article>
+            </section>
+        </main>
+
+        <main>
+        <section class="contact-section">
+            <h2>Contact us</h2>
+            <form action="#" method="post" enctype="multipart/form-data">
+                
+                <label for="name">Full name <span class="required">*</span></label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+                <label for="email">Email <span class="required">*</span></label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+
+                <label for="subject">Subject <span class="required">*</span></label>
+                <select id="subject" name="subject" required>
+                    <option value="">Select a subject</option>
+                    <option value="support">Support</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="business">Business inquiry</option>
+                </select>
+
+                <label for="message">Message <span class="required">*</span></label>
+                <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+
+                <div class="file-upload">
+                    <label for="file"><span class="clip">📎</span> Attach Files</label>
+                    <input type="file" id="file" name="file" multiple>
+                    <p class="file-note">Attach up to 10 files. The maximum allowed size per file is 20 MB.</p>
+                </div>
+
+                <button type="submit" class="send-btn">Send</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

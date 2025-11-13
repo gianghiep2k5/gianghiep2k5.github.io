@@ -1,0 +1,26 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Rectangle</title>
+<script language="javascript">
+var length = prompt("Enter the length of the rectangle:");
+var width = prompt("Enter the width of the rectangle:");
+
+if(length == null || length == "" || isNaN(length))
+    document.write("<font color='red'>Length is invalid!</font>");
+else if(width == null || width == "" || isNaN(width))
+    document.write("<font color='red'>Width is invalid!</font>");
+else {
+    var perimeter = 2 * (parseFloat(length) + parseFloat(width));
+    var area = parseFloat(length) * parseFloat(width);
+    document.write("<font color='green'><b>Rectangle Information:</b></font><br>");
+    document.write("Length = " + length + "<br>");
+    document.write("Width = " + width + "<br>");
+    document.write("Perimeter = " + perimeter + "<br>");
+    document.write("Area = " + area);
+}
+</script>
+</head>
+<body>
+</body>
+</html>
