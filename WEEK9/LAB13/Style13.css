@@ -1,0 +1,24 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+  }
+  table {
+    margin: auto;
+    border-collapse: collapse;
+  }
+  th {
+    background-color: #0066cc;
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+  }
+  td {
+    padding: 8px;
+    vertical-align: top;
+  }
+  input[type="text"], input[type="password"], textarea, select {
+    width: 200px;
+  }
+  input[type="submit"], input[type="reset"] {
+    width: 80px;
+  }
