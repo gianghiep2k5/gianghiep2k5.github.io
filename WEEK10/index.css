@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap');
+
+body {
+    background: #11141d;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+    font-family: 'Rubik', sans-serif;
+}
+
+/* Main calculator frame */
+.calculator {
+    width: 380px;
+    background: #0f1119;
+    padding: 25px;
+    border-radius: 25px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.7);
+    border: 2px solid #1f2333;
+}
+
+/* Branding CASIO top */
+.brand {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.logo {
+    color: white;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.model {
+    color: #00ffd0;
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.calc-type {
+    color: #aaa;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+/* LCD SCREEN */
+.screen {
+    background: #d7e9df;
+    width: 100%;
+    height: 90px;
+    border-radius: 8px;
+    padding: 10px;
+    border: 2px solid #0c0c0c;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+}
+
+#main-display {
+    font-size: 34px;
+    text-align: right;
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+#sub-display {
+    text-align: right;
+    font-size: 18px;
+    color: #444;
+    margin-top: -5px;
+}
+
+/* SHIFT ALPHA labels */
+.shift-labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5px;
+    margin-bottom: 10px;
+}
+
+.shift-text {
+    color: #ffd43b;
+    font-size: 14px;
+}
+
+.alpha-text {
+    color: #ff6b6b;
+    font-size: 14px;
+}
+
+/* Keypad grid */
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+}
+
+/* Key style */
+button {
+    background: #161922;
+    border: 1px solid #2b3147;
+    border-radius: 8px;
+    color: white;
+    font-size: 17px;
+    padding: 12px 0;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+button.op {
+    background: #2c344d;
+}
+
+button.shift {
+    color: #ffd43b;
+}
+
+button.alpha {
+    color: #ff6b6b;
+}
+
+button.ac {
+    background: #ff4d4d;
+}
+
+button.equal {
+    background: #0dafff;
+    grid-column: span 2;
+}
+
+button.zero {
+    grid-column: span 2;
+}
+
+button:active {
+    transform: scale(0.95);
+    background: #282d3d;
+}
+/* FRACTION (tử trên – mẫu dưới) */
+.frac {
+    display: inline-block;
+    text-align: center;
+}
+
+.frac > .top {
+    border-bottom: 1px solid black;
+    display: block;
+    padding: 0 3px;
+}
+
+.frac > .bottom {
+    display: block;
+    padding: 0 3px;
+}
+
+/* SQRT */
+.sqrt {
+    font-size: 28px;
+    display: inline-flex;
+    align-items: flex-start;
+}
+
+.radicand {
+    border-top: 2px solid black;
+    margin-left: 5px;
+    padding: 0 3px;
+}
+
+/* POWER */
+.power sup {
+    font-size: 16px;
+    vertical-align: super;
+    margin-left: 2px;
+}
