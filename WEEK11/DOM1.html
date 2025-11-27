@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Info</title>
+</head>
+<body>
+    <h1 onclick="showInfo(this)">Click on this text!</h1>
+
+    <script>
+        function showInfo(element) {
+            element.innerHTML = `
+                <p><strong>Name:</strong> Trinh Nhu Long</p>
+                <p><strong>Gender:</strong> Male</p>
+                <p><strong>Date of Birth:</strong> March 4, 2005</p>
+            `;
+        }
+    </script>
+</body>
+</html>

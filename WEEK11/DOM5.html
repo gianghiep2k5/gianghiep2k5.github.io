@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Information</title>
+</head>
+<body>
+    <h1>Personal Information</h1>
+    <details open>
+        <img src="/WEEK11/IMG_2412 2.jpg" alt="Profile Picture" style="width:150px;height:150px;">
+        <summary><strong>Name: Giang Lê Hiệp</strong></summary>
+        <ol>
+            <li>University: VNU-INTERNATIONAL SCHOOL</li>
+            <li>Student code: 23070691</li>
+            <li>Sex: Male</li>
+            <li>Program/Specialization: Management Information Systems (MIS)</li>
+        </ol>
+    </details>
+    <hr>
+    <details>
+        <summary><strong>Academic Information</strong></summary>
+        <ol>
+            <li>Class: MIS2023A</li>
+            <li>Course: QH-2023-Q</li>
+            <li>Training program: University</li>
+        </ol>
+    </details>
+    <hr>
+    <details>
+        <summary><strong>Additional Information</strong></summary>
+        <ol>
+            <li>Paragraph 1: Program/specialization: Management Information Systems (MIS)</li>
+            <li><video src="/WEEK11/IMG_3338.MOV" controls style="width:300px;height:200px;"></video></li>
+            <li>Paragraph 3</li>
+        </ol>
+    </details>
+    <hr>
+    <h2>Thêm thông tin</h2>
+    <div onmouseover="mOver(this)" onmouseout="mOut(this)" style="background-color:#461da5;width:220px;height:50px;padding:20px;text-align:center;color:white;cursor:pointer;">
+        Di chuột vào đây
+    </div>
+
+    <script>
+        function mOver(obj) {
+            obj.innerHTML = '<a href="mailto:2307691@vnu.edu.vn" style="color:white;text-decoration:underline;">Gmail: 23070691@vnu.edu.vn</a>';
+        }
+
+        function mOut(obj) {
+            obj.innerHTML = "Liên hệ thêm chi tiết tại đây";
+        }
+    </script>
+</body>
+</html>
