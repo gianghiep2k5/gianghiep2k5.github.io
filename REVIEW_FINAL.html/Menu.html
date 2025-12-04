@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Ôn tập ISV2017</title>
+    <!-- Link tới file CSS bên ngoài -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Phần 1: Menu điều hướng -->
+    <nav id="mainNav">
+        <a href="#">Trang chủ</a> -
+        <a href="#">Sách &copy;</a> -
+        <a href="#">Tác giả &trade;</a> -
+        <a href="#">Liên hệ</a>
+    </nav>
+    <botton onclick="Ẩnhiệnmenu()">Ẩn hiện Menu</botton>
+
+    <script>
+        function Ẩnhiệnmenu() {
+            var nav = document.getElementById("mainNav");
+            if (nav.style.display === "none") {
+                nav.style.display = "block";
+            } else {
+                nav.style.display = "none";
+            }
+        }
+    </script>
+<body>
+</html>
+
