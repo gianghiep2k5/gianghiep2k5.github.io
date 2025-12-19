@@ -1,268 +1,739 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VNU-IS ISNOW 2025 - Guest Check-in</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VNU-IS | ISNOW Christmas Gala 2025 - Guest Check-in</title>
+
+  <!-- Excel export library (SheetJS) -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
   <style>
-    :root {
-      --vnu-red: #8B1538;
-      --vnu-gold: #D4AF37;
-      --vnu-dark: #1a3a5c;
-      --bg-gradient: linear-gradient(135deg, #8B1538 0%, #4A0E23 100%);
+    :root{
+      --vnu-red:#8B1538;
+      --vnu-gold:#D4AF37;
+      --vnu-dark:#1a3a5c;
+      --bg-gradient:
+        radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,0.12), transparent 50%),
+        linear-gradient(135deg, #8B1538 0%, #4A0E23 100%);
+      --card-radius:18px;
+      --shadow:0 18px 55px rgba(0,0,0,0.35);
+      --muted:#6b7280;
+      --border:#e5e7eb;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg-gradient);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      color: #333;
-      overflow-x: hidden;
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background:url('https://i.imgur.com/6JZq9Xh.jpeg') center/cover no-repeat fixed;
+      min-height:100vh;
+      color:#111827;
+      overflow-x:hidden;
+      position:relative;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(139,21,56,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(212,175,55,0.12) 0%, transparent 40%),
+        linear-gradient(135deg, rgba(26,58,92,0.25), rgba(139,21,56,0.2));
+      backdrop-filter:blur(2px);
+      z-index:0;
+    }
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 90%, rgba(255,255,255,0.08) 0%, transparent 25%);
+      animation:shimmer 8s ease-in-out infinite;
+      z-index:0;
+      pointer-events:none;
+    }
+    @keyframes shimmer{
+      0%, 100%{opacity:0.3}
+      50%{opacity:0.6}
     }
 
-    /* Snowflake Effect */
-    .snowflake {
-      position: fixed; top: -10px; color: white;
-      font-size: 1em; animation: fall linear infinite;
-      pointer-events: none; z-index: 1000;
+    /* Snow effect */
+    .snowflake{
+      position:fixed;
+      top:-12px;
+      font-size:18px;
+      animation:fall linear infinite;
+      pointer-events:none;
+      z-index:1;
+      filter:drop-shadow(0 2px 6px rgba(0,0,0,0.2));
     }
-    @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+    @keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
 
-    /* Header & Branding */
-    .header {
-      position: absolute; top: 0; left: 0; right: 0;
-      padding: 20px 40px;
-      display: flex; justify-content: space-between; align-items: center;
-      z-index: 10;
+    /* Balanced header (3 columns) */
+    .header{
+      position:fixed;
+      top:0;left:0;right:0;
+      padding:16px 22px;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      gap:12px;
+      z-index:10;
+      background:linear-gradient(to bottom, rgba(0,0,0,0.22), transparent);
+      backdrop-filter:blur(6px);
+    }
+    .header-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      justify-self:start;
+    }
+    .header-center{
+      justify-self:center;
+      text-align:center;
+      color:white;
+      line-height:1.15;
+    }
+    .header-center .title{
+      font-weight:900;
+      font-size:14px;
+      letter-spacing:.3px;
+    }
+    .header-center .sub{
+      font-size:12px;
+      opacity:.9;
+    }
+    .header-right{
+      justify-self:end;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .brand-logo{
+      height:48px;
+      width:auto;
+      display:block;
+      filter:drop-shadow(0 2px 10px rgba(0,0,0,0.25));
     }
 
-    .brand-logo {
-      height: 80px;
-      filter: drop-shadow(0 2px 10px rgba(0,0,0,0.2));
+    /* Layout */
+    .main-container{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:110px 18px 40px;
+      position:relative;
+      z-index:2;
     }
-
-    /* Layout Containers */
-    .main-container {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 100px 20px 40px;
+    .card-base{
+      width:100%;
+      max-width:640px;
+      background:rgba(255,255,255,0.98);
+      border-radius:var(--card-radius);
+      box-shadow:
+        var(--shadow),
+        0 0 60px rgba(212,175,55,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+      padding:34px;
+      text-align:center;
+      border:1px solid rgba(255,255,255,0.4);
+      animation:fadeIn .7s ease-out;
+      position:relative;
+      overflow:hidden;
     }
-
-    .card-base {
-      background: white;
-      width: 100%;
-      max-width: 600px;
-      border-radius: 15px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-      padding: 40px;
-      text-align: center;
-      animation: fadeIn 0.8s ease-out;
+    .card-base::before{
+      content:"";
+      position:absolute;
+      top:-50%;
+      left:-50%;
+      width:200%;
+      height:200%;
+      background:
+        radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+      animation:rotate 20s linear infinite;
+      pointer-events:none;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes rotate{
+      from{transform:rotate(0deg)}
+      to{transform:rotate(360deg)}
+    }
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(14px)}
+      to{opacity:1;transform:translateY(0)}
     }
 
     /* Typography */
-    h1 { color: white; font-size: 2.5em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-    .subtitle { color: #FFE5CC; margin-bottom: 30px; font-size: 1.1em; }
-    h2 { color: var(--vnu-dark); margin-bottom: 20px; font-weight: 700; }
-
-    /* Form Elements */
-    .form-group { text-align: left; margin-bottom: 20px; }
-    label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
-    input, select {
-      width: 100%; padding: 12px 15px;
-      border: 1px solid #ddd; border-radius: 8px;
-      font-size: 16px; transition: 0.3s;
+    h2{
+      color:var(--vnu-dark);
+      margin-bottom:10px;
+      font-size:24px;
+      font-weight:800;
+      letter-spacing:.2px;
+      position:relative;
+      z-index:1;
     }
-    input:focus { border-color: var(--vnu-red); outline: none; box-shadow: 0 0 0 3px rgba(139, 21, 56, 0.1); }
+    .lead{
+      color:var(--muted);
+      margin:10px auto 22px;
+      line-height:1.55;
+      max-width:520px;
+      font-size:14.5px;
+      position:relative;
+      z-index:1;
+    }
+
+    /* Form */
+    .form{
+      text-align:left;
+      margin-top:10px;
+      display:grid;
+      gap:14px;
+    }
+    label{
+      font-weight:700;
+      font-size:13px;
+      color:#374151;
+      margin-bottom:6px;
+      display:block;
+    }
+    input, select{
+      width:100%;
+      padding:12px 12px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      font-size:15px;
+      transition:.2s;
+      outline:none;
+      background:#fff;
+    }
+    input:focus, select:focus{
+      border-color:rgba(139,21,56,.55);
+      box-shadow:0 0 0 4px rgba(139,21,56,.10);
+    }
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width:560px){
+      .row{grid-template-columns:1fr}
+      .card-base{padding:26px}
+    }
 
     /* Buttons */
-    .btn {
-      padding: 14px 30px; border: none; border-radius: 8px;
-      font-weight: 700; cursor: pointer; transition: 0.3s;
-      text-transform: uppercase; letter-spacing: 1px;
+    .btn{
+      border:none;
+      border-radius:10px;
+      padding:12px 16px;
+      font-weight:800;
+      cursor:pointer;
+      transition:.22s;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+      font-size:12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      user-select:none;
+      white-space:nowrap;
     }
-    .btn-gold { background: var(--vnu-gold); color: white; width: 100%; margin-top: 10px; }
-    .btn-gold:hover { background: #b8952d; transform: translateY(-2px); }
-    .btn-admin { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; font-size: 0.8em; padding: 8px 15px; }
-
-    /* Christmas Card Styles */
-    .xmas-card {
-      border: 10px solid var(--vnu-gold);
-      background: #fff; position: relative;
+    .btn-primary{
+      background:linear-gradient(135deg, var(--vnu-gold), #b8952d);
+      color:white;
+      width:100%;
+      box-shadow:0 4px 16px rgba(212,175,55,0.3);
+      position:relative;
+      z-index:1;
     }
-    .card-logo-inner { height: 60px; margin-bottom: 15px; }
-    .greeting-text { font-family: 'Georgia', serif; font-size: 2em; color: var(--vnu-red); margin: 20px 0; font-style: italic; }
-    .guest-msg { font-style: italic; color: #444; line-height: 1.6; margin-bottom: 25px; background: #fdf8f0; padding: 20px; border-radius: 10px; }
-    .guest-info-grid { border-top: 1px solid #eee; padding-top: 20px; text-align: left; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.9em; }
-    .info-item b { color: var(--vnu-dark); }
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.08);
+      box-shadow:0 6px 20px rgba(212,175,55,0.4);
+    }
+    .btn-ghost{
+      background:rgba(255,255,255,0.12);
+      border:1px solid rgba(255,255,255,0.45);
+      color:white;
+      padding:10px 12px;
+      font-size:11px;
+    }
+    .btn-secondary{
+      background:#f3f4f6;
+      color:#111827;
+      border:1px solid #e5e7eb;
+      text-transform:uppercase;
+      letter-spacing:.6px;
+      font-weight:800;
+    }
+    .btn-danger{
+      background:#fee2e2;
+      color:#991b1b;
+      border:1px solid #fecaca;
+      text-transform:uppercase;
+      letter-spacing:.6px;
+      font-weight:800;
+    }
 
-    /* Admin Table Styles */
-    .admin-panel { max-width: 900px; display: none; }
-    .table-wrapper { overflow-x: auto; margin-top: 20px; }
-    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; }
-    th { background: var(--vnu-dark); color: white; padding: 15px; text-align: left; }
-    td { padding: 12px 15px; border-bottom: 1px solid #eee; font-size: 0.9em; }
-    tr:hover { background: #f9f9f9; }
+    /* Welcome */
+    .logo-big{
+      height:110px;
+      margin:0 auto 18px;
+      display:block;
+      filter:drop-shadow(0 4px 20px rgba(0,0,0,0.25));
+      animation:float 3s ease-in-out infinite;
+    }
+    @keyframes float{
+      0%, 100%{transform:translateY(0px)}
+      50%{transform:translateY(-8px)}
+    }
+    .badge{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      color:var(--vnu-red);
+      background:linear-gradient(135deg, #fff7ed, #ffedd5);
+      border:1px solid #fed7aa;
+      border-radius:999px;
+      padding:8px 16px;
+      font-size:12px;
+      margin-bottom:14px;
+      box-shadow:0 4px 12px rgba(212,175,55,0.15);
+      animation:pulse 2s ease-in-out infinite;
+      position:relative;
+      z-index:1;
+    }
+    @keyframes pulse{
+      0%, 100%{transform:scale(1)}
+      50%{transform:scale(1.03)}
+    }
 
-    .hidden { display: none !important; }
+    /* Invitation Card */
+    .xmas-card{
+      border:10px solid rgba(212,175,55,0.95);
+      position:relative;
+      overflow:hidden;
+      text-align:left;
+    }
+    .xmas-card::before{
+      content:"";
+      position:absolute;
+      inset:-80px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(212,175,55,0.20), transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(139,21,56,0.12), transparent 45%);
+      transform:rotate(8deg);
+      z-index:0;
+    }
+    .card-inner{position:relative;z-index:1}
+    .card-header{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      margin-bottom:10px;
+    }
+    .card-logo-inner{height:54px}
+    .card-title b{display:block;color:var(--vnu-dark);font-size:16px}
+    .card-title span{color:var(--muted);font-size:12px}
+
+    .greeting-text{
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:34px;
+      color:var(--vnu-red);
+      font-style:italic;
+      margin:14px 0 10px;
+    }
+    .guest-msg{
+      color:#111827;
+      line-height:1.65;
+      background:rgba(255,247,237,0.85);
+      border:1px solid #fed7aa;
+      padding:16px;
+      border-radius:12px;
+      margin:12px 0 16px;
+      font-size:14.5px;
+    }
+    .guest-info-grid{
+      border-top:1px solid rgba(0,0,0,0.08);
+      padding-top:14px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      font-size:13px;
+    }
+    .info-item b{color:var(--vnu-dark)}
+    .card-actions{
+      margin-top:18px;
+      display:flex;
+      gap:10px;
+    }
+    .card-actions .btn{flex:1}
+
+    /* Admin */
+    .admin-panel{
+      max-width:980px;
+      text-align:left;
+      display:none;
+    }
+    .admin-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      border-bottom:2px solid rgba(139,21,56,0.25);
+      padding-bottom:10px;
+      flex-wrap:wrap;
+    }
+    .admin-meta{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .table-wrapper{
+      overflow-x:auto;
+      margin-top:14px;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      background:white;
+      min-width:720px;
+    }
+    th{
+      background:var(--vnu-dark);
+      color:white;
+      padding:14px;
+      text-align:left;
+      font-size:13px;
+    }
+    td{
+      padding:12px 14px;
+      border-bottom:1px solid #f1f5f9;
+      font-size:13px;
+      color:#111827;
+    }
+    tr:hover td{background:#fafafa}
+
+    .hidden{display:none!important}
+
+    /* Print: only invitation card */
+    @media print{
+      body{background:white!important}
+      .header,#welcomeScreen,#formScreen,#adminPanel{display:none!important}
+      #cardScreen{box-shadow:none!important;border:none!important;padding:0!important}
+      .xmas-card{border:10px solid #D4AF37!important}
+    }
   </style>
 </head>
-<body>
 
+<body>
+  <!-- Balanced Header -->
   <div class="header">
-    <img src="https://www.is.vnu.edu.vn/wp-content/uploads/2022/04/icon_negative_yellow_text-08-539x600.png" alt="VNU-IS Logo" class="brand-logo">
-    <button class="btn btn-admin" onclick="showAdmin()">Admin Portal</button>
+    <div class="header-left">
+      <img
+        src="https://www.is.vnu.edu.vn/wp-content/uploads/2022/04/icon_negative_yellow_text-08-539x600.png"
+        alt="VNU-IS Logo"
+        class="brand-logo"
+      />
+    </div>
+
+    <div class="header-center">
+      <div class="title">VNU-IS | ISNOW Christmas Gala 2025</div>
+      <div class="sub">Guest Check-in & Invitation Card</div>
+    </div>
+
+    <div class="header-right">
+      <button class="btn btn-ghost" onclick="showAdmin()">Admin Portal</button>
+      <button class="btn btn-ghost" onclick="exportToExcel()">Export Excel</button>
+    </div>
   </div>
 
   <div class="main-container">
-    
+    <!-- Welcome -->
     <div id="welcomeScreen" class="card-base">
-        <img src="https://www.is.vnu.edu.vn/wp-content/uploads/2022/04/icon_negative_yellow_text-08-539x600.png" alt="Logo" style="height: 100px; margin-bottom: 20px;">
-        <h2 style="color: var(--vnu-red); font-size: 2.2em;">Christmas Gala 2024</h2>
-        <p style="margin-bottom: 30px; color: #666;">Welcome to the Annual International School Christmas Celebration. Please check-in to receive your invitation card.</p>
-        <button class="btn btn-gold" onclick="navigateTo('formScreen')">Begin Check-in</button>
+      <div class="badge">🎄 Welcome • Check-in Required</div>
+      <img
+        src="https://www.is.vnu.edu.vn/wp-content/uploads/2022/04/icon_negative_yellow_text-08-539x600.png"
+        alt="Logo"
+        class="logo-big"
+      />
+      <h2 style="color: var(--vnu-red);">Christmas Gala 2025</h2>
+      <p class="lead">
+        Welcome to the Annual International School Christmas Celebration.
+        Please check in to generate your personal invitation card.
+      </p>
+      <button class="btn btn-primary" onclick="navigateTo('formScreen')">Begin Check-in</button>
     </div>
 
+    <!-- Form -->
     <div id="formScreen" class="card-base hidden">
-        <h2>Guest Registration</h2>
-        <form id="checkinForm" onsubmit="handleCheckin(event)">
-            <div class="form-group">
-                <label>Full Name</label>
-                <input type="text" id="fullname" placeholder="Enter your full name" required>
-            </div>
-            <div class="form-group">
-                <label>Class / Department</label>
-                <input type="text" id="classname" placeholder="e.g. MIS 2024" required>
-            </div>
-            <div class="form-group">
-                <label>Nationality</label>
-                <select id="country" required>
-                    <option value="">Select your country</option>
-                    <option value="Vietnam">Vietnam</option>
-                    <option value="International">International Guest</option>
-                    <option value="USA">United States</option>
-                    <option value="Korea">South Korea</option>
-                    <option value="Japan">Japan</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-gold">Generate Invitation Card</button>
-        </form>
+      <h2>Guest Registration</h2>
+      <p class="lead">Please fill in your information accurately for attendance records.</p>
+
+      <form id="checkinForm" class="form" onsubmit="handleCheckin(event)">
+        <div>
+          <label for="fullname">Full Name</label>
+          <input type="text" id="fullname" placeholder="e.g. Nguyen Van A" required />
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="classname">Class / Department</label>
+            <input type="text" id="classname" placeholder="e.g. MIS K24" required />
+          </div>
+
+          <div>
+            <label for="country">Nationality</label>
+            <input type="text" id="country" placeholder="e.g. Vietnam" required />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Generate Invitation Card</button>
+        <button type="button" class="btn btn-secondary" onclick="navigateTo('welcomeScreen')">Back</button>
+      </form>
     </div>
 
+    <!-- Invitation Card -->
     <div id="cardScreen" class="card-base xmas-card hidden">
-        <img src="https://www.is.vnu.edu.vn/wp-content/uploads/2022/04/icon_negative_yellow_text-08-539x600.png" class="card-logo-inner">
+      <div class="card-inner">
+        <div class="card-header">
+          <img
+            src="https://www.is.vnu.edu.vn/wp-content/uploads/2022/04/icon_negative_yellow_text-08-539x600.png"
+            class="card-logo-inner"
+            alt="Logo"
+          />
+          <div class="card-title">
+            <b>VNU-IS | ISNOW Christmas Gala 2025</b>
+            <span>Official Invitation Card</span>
+          </div>
+        </div>
+
         <div class="greeting-text">Merry Christmas!</div>
         <p class="guest-msg" id="cardMessage"></p>
-        
+
         <div class="guest-info-grid">
-            <div class="info-item"><b>Guest:</b> <span id="resName"></span></div>
-            <div class="info-item"><b>Class:</b> <span id="resClass"></span></div>
-            <div class="info-item"><b>Origin:</b> <span id="resCountry"></span></div>
-            <div class="info-item"><b>Time:</b> <span id="resTime"></span></div>
+          <div class="info-item"><b>Guest:</b> <span id="resName"></span></div>
+          <div class="info-item"><b>Class:</b> <span id="resClass"></span></div>
+          <div class="info-item"><b>Nationality:</b> <span id="resCountry"></span></div>
+          <div class="info-item"><b>Check-in Time:</b> <span id="resTime"></span></div>
         </div>
-        
-        <div style="margin-top: 30px; display: flex; gap: 10px;">
-            <button class="btn btn-gold" style="flex:1" onclick="window.print()">Print Card</button>
-            <button class="btn btn-admin" style="color: #666; border-color: #ccc;" onclick="location.reload()">Back</button>
+
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="window.print()">Print Card</button>
+          <button class="btn btn-secondary" onclick="navigateTo('welcomeScreen')">Done</button>
         </div>
+      </div>
     </div>
 
+    <!-- Admin -->
     <div id="adminPanel" class="card-base admin-panel">
-        <h2 style="text-align: left; border-bottom: 2px solid var(--vnu-red); padding-bottom: 10px;">Guest Attendance List</h2>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>Full Name</th>
-                        <th>Class</th>
-                        <th>Country</th>
-                        <th>Time</th>
-                    </tr>
-                </thead>
-                <tbody id="adminTableBody">
-                    </tbody>
-            </table>
+      <div class="admin-head">
+        <h2 style="margin:0;">Guest Attendance List</h2>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;">
+          <button class="btn btn-secondary" onclick="exportToExcel()">Export Excel</button>
+          <button class="btn btn-danger" onclick="clearCheckins()">Clear List</button>
+          <button class="btn btn-primary" style="width:auto;" onclick="navigateTo('welcomeScreen')">Home</button>
         </div>
-        <button class="btn btn-gold" style="margin-top: 20px; width: auto;" onclick="navigateTo('welcomeScreen')">Back to Home</button>
-    </div>
+      </div>
 
+      <div class="admin-meta">
+        <div><b>Total Guests:</b> <span id="totalGuests">0</span></div>
+        <div style="opacity:.95;">Storage: Local browser (localStorage)</div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Full Name</th>
+              <th>Class / Department</th>
+              <th>Nationality</th>
+              <th>Check-in Time</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <script>
-    const STORAGE_KEY = 'vnu_is_xmas_2024';
+    const STORAGE_KEY = "vnu_is_isnow_2025_checkins";
 
-    // Snowflake generation
-    function createSnow() {
-      const container = document.body;
-      for (let i = 0; i < 30; i++) {
-        const snow = document.createElement('div');
-        snow.className = 'snowflake';
-        snow.innerHTML = '❄';
-        snow.style.left = Math.random() * 100 + 'vw';
-        snow.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        snow.style.opacity = Math.random();
-        container.appendChild(snow);
+    // Snow with cute Christmas emojis
+    (function createSnow(){
+      const emojis = ["❄️","⛄","🎄","🎅","🦌","🔔","⭐","🎁"];
+      const count = 32;
+      for(let i=0;i<count;i++){
+        const snow=document.createElement("div");
+        snow.className="snowflake";
+        snow.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+        snow.style.left=(Math.random()*100)+"vw";
+        snow.style.animationDuration=(Math.random()*5+4)+"s";
+        snow.style.opacity=(Math.random()*0.7+0.3).toFixed(2);
+        snow.style.fontSize=(Math.random()*12+14)+"px";
+        snow.style.animationDelay=(Math.random()*5)+"s";
+        document.body.appendChild(snow);
       }
-    }
-    createSnow();
+    })();
 
-    function navigateTo(screenId) {
-      document.querySelectorAll('.card-base').forEach(s => s.classList.add('hidden'));
-      document.getElementById(screenId).classList.remove('hidden');
-      if(screenId === 'adminPanel') updateAdminTable();
+    // Navigation
+    function navigateTo(screenId){
+      document.querySelectorAll(".card-base").forEach(s=>s.classList.add("hidden"));
+      document.getElementById(screenId).classList.remove("hidden");
+      if(screenId==="adminPanel") updateAdminTable();
+      if(screenId==="formScreen") document.getElementById("fullname").focus();
+    }
+    function showAdmin(){
+      navigateTo("adminPanel");
     }
 
-    function handleCheckin(e) {
+    // Storage helpers
+    function readList(){
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    }
+    function writeList(list){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    // Prevent duplicates by (Name + Class)
+    function isDuplicate(list, guest){
+      const key = s => (s || "").trim().toLowerCase();
+      return list.some(g => key(g.name)===key(guest.name) && key(g.className)===key(guest.className));
+    }
+
+    // Check-in
+    function handleCheckin(e){
       e.preventDefault();
+
       const guest = {
-        name: document.getElementById('fullname').value,
-        class: document.getElementById('classname').value,
-        country: document.getElementById('country').value,
-        time: new Date().toLocaleString()
+        name: document.getElementById("fullname").value.trim(),
+        className: document.getElementById("classname").value.trim(),
+        country: document.getElementById("country").value.trim(),
+        time: new Date().toLocaleString("en-GB")
       };
 
-      // Save to LocalStorage
-      const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      if(!guest.name || !guest.className || !guest.country) return;
+
+      const list = readList();
+      if(isDuplicate(list, guest)){
+        alert("This guest appears to have already checked in (same Name + Class).");
+        return;
+      }
+
       list.push(guest);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      writeList(list);
 
-      // Show Card
-      document.getElementById('resName').innerText = guest.name;
-      document.getElementById('resClass').innerText = guest.class;
-      document.getElementById('resCountry').innerText = guest.country;
-      document.getElementById('resTime').innerText = guest.time;
-      document.getElementById('cardMessage').innerText = `Dear ${guest.name}, thank you for joining our Gala. We wish you a season filled with warmth, joy, and academic success at VNU-IS!`;
+      // Card output
+      document.getElementById("resName").innerText = guest.name;
+      document.getElementById("resClass").innerText = guest.className;
+      document.getElementById("resCountry").innerText = guest.country;
+      document.getElementById("resTime").innerText = guest.time;
 
-      navigateTo('cardScreen');
+      // Random Christmas greeting (8 different messages)
+      const greetings = [
+        `Thân gửi ${guest.name}, cảm ơn bạn đã tham dự ISNOW Christmas Gala 2025! Chúc bạn một mùa lễ ấm áp, tràn đầy niềm vui và nhiều thành công rực rỡ tại VNU-IS! 🎄`,
+        `Dear ${guest.name}, thank you for joining us at the ISNOW Christmas Gala 2025. May your holiday season sparkle with moments of love, laughter, and goodwill! ✨`,
+        `Kính gửi ${guest.name}, chúng tôi rất vui mừng được chào đón bạn tại Christmas Gala 2025. Chúc bạn một Giáng sinh thật ấm cúng bên gia đình và bạn bè! 🎅`,
+        `Hi ${guest.name}! Thanks for celebrating with us this Christmas. Wishing you endless joy, peace, and wonderful memories at VNU-IS! 🎁`,
+        `Gửi ${guest.name} thân mến, Chúc mừng Giáng sinh! Hy vọng bạn có một đêm tuyệt vời tại ISNOW Gala và một năm mới thành công rực rỡ! 🌟`,
+        `Dear ${guest.name}, it's a pleasure to have you at our Christmas celebration! May this festive season bring you happiness, success, and countless blessings! 🔔`,
+        `${guest.name} ơi, cảm ơn bạn đã đến với chúng tôi! Chúc bạn một mùa Giáng sinh an lành và một năm mới tràn đầy niềm vui! ⛄`,
+        `Welcome ${guest.name}! May your Christmas be filled with magic, wonder, and the warmth of friendship at VNU-IS! 🦌`
+      ];
+      
+      const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+      document.getElementById("cardMessage").innerText = randomGreeting;
+
+      document.getElementById("checkinForm").reset();
+      navigateTo("cardScreen");
     }
 
-    function showAdmin() {
-      navigateTo('adminPanel');
-    }
+    // Admin table
+    function updateAdminTable(){
+      const list = readList();
+      document.getElementById("totalGuests").innerText = list.length;
 
-    function updateAdminTable() {
-      const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      const tbody = document.getElementById('adminTableBody');
-      tbody.innerHTML = list.length ? list.map((g, i) => `
+      const tbody = document.getElementById("adminTableBody");
+      if(!list.length){
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" style="text-align:center; color:#6b7280; padding:18px;">
+              No guests have checked in yet.
+            </td>
+          </tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map((g,i)=>`
         <tr>
-          <td>${i + 1}</td>
-          <td><b>${g.name}</b></td>
-          <td>${g.class}</td>
-          <td>${g.country}</td>
-          <td>${g.time}</td>
+          <td>${i+1}</td>
+          <td><b>${escapeHtml(g.name)}</b></td>
+          <td>${escapeHtml(g.className)}</td>
+          <td>${escapeHtml(g.country)}</td>
+          <td>${escapeHtml(g.time)}</td>
         </tr>
-      `).join('') : '<tr><td colspan="5" style="text-align:center">No guests checked in yet.</td></tr>';
+      `).join("");
+    }
+
+    // Export to Excel (.xlsx) — exports ONLY checked-in guests in localStorage
+    function exportToExcel(){
+      const list = readList();
+      if(!list.length){
+        alert("No check-in data to export.");
+        return;
+      }
+
+      const rows = list.map((g, idx) => ({
+        "No.": idx + 1,
+        "Full Name": g.name,
+        "Class / Department": g.className,
+        "Nationality": g.country,
+        "Check-in Time": g.time
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(rows);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Check-ins");
+
+      const d = new Date();
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth()+1).padStart(2,"0");
+      const dd = String(d.getDate()).padStart(2,"0");
+
+      XLSX.writeFile(wb, `ISNOW_2025_Checkins_${yyyy}-${mm}-${dd}.xlsx`);
+    }
+
+    // Clear list
+    function clearCheckins(){
+      const ok = confirm("Are you sure you want to clear all check-in data on this browser?");
+      if(!ok) return;
+      localStorage.removeItem(STORAGE_KEY);
+      updateAdminTable();
+    }
+
+    // Escape HTML for table safety
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
     }
   </script>
 </body>
