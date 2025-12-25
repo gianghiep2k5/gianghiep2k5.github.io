@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VNU-IS | ISNOW Christmas Gala 2025</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --vnu-red: #8B1538;
+            --vnu-gold: #D4AF37;
+            --christmas-red: #C41E3A;
+            --card-radius: 30px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Georgia', 'Palatino', serif; }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                        url('https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1920') center/cover no-repeat fixed;
+            display: flex; align-items: center; justify-content: center; overflow-x: hidden; position: relative;
+        }
+
+        .snow-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+        
+        /* 360 Rotating Logo */
+        .logo-box {
+            width: 75px; height: 75px; background: white; border-radius: 18px;
+            padding: 8px; margin: 0 auto 20px; display: flex; align-items: center;
+            justify-content: center; box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            animation: logoRotate360 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes logoRotate360 {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        /* Professional Card with Double Border */
+        .card {
+            width: 95%; max-width: 640px; background: #fff; border-radius: var(--card-radius);
+            padding: 45px 35px; text-align: center; position: relative; overflow: hidden;
+            border: 6px double var(--vnu-gold);
+            box-shadow: 0 0 0 3px var(--christmas-red), 0 25px 80px rgba(0,0,0,0.8);
+            z-index: 2;
+        }
+
+        .main-title { color: var(--christmas-red); font-size: 36px; font-weight: 900; margin-bottom: 8px; }
+        
+        /* Pop-up Number Animation */
+        .lucky-number {
+            font-family: 'Courier New', monospace; font-size: 85px; font-weight: 950;
+            color: var(--christmas-red); line-height: 1; margin: 15px 0;
+            text-shadow: 2px 2px 0 rgba(212, 175, 55, 0.2);
+            animation: boomNumber 0.7s cubic-bezier(0.17, 0.89, 0.32, 1.49) forwards;
+        }
+        @keyframes boomNumber {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.3); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .ticket-box {
+            width: 100%; border: 2.5px dashed var(--vnu-gold); border-radius: 15px;
+            padding: 25px; margin-bottom: 25px; position: relative; background: rgba(255, 250, 240, 0.85);
+        }
+
+        /* Buttons on a Single Row */
+        .btn-row { 
+            display: flex; gap: 12px; width: 100%; justify-content: center; margin-top: 20px;
+        }
+        .btn {
+            flex: 0 1 220px; padding: 16px; border-radius: 12px; border: none;
+            font-weight: 800; font-size: 14px; cursor: pointer; text-transform: uppercase;
+            transition: 0.3s; letter-spacing: 1.2px;
+        }
+        .btn-gold { background: linear-gradient(135deg, var(--vnu-gold), #b8952d); color: #fff; }
+        .btn-dark { background: #1a1a1a; color: #fff; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.4); }
+
+        /* Icon Explosion Effect */
+        .firework-icon {
+            position: fixed; font-size: 30px; z-index: 9999; pointer-events: none;
+            animation: explode 2s ease-out forwards;
+        }
+        @keyframes explode {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0) rotate(720deg); opacity: 0; }
+        }
+
+        .hidden { display: none !important; }
+        input { width: 100%; padding: 14px; border: 1.5px solid #eee; border-radius: 12px; margin-bottom: 15px; font-size: 16px; }
+        label { font-size: 11px; font-weight: 800; text-transform: uppercase; color: #555; display: block; text-align: left; margin-bottom: 5px; }
+
+        .snowflake { position: fixed; top: -10px; color: white; pointer-events: none; z-index: 100; animation: snowfall linear infinite; }
+        @keyframes snowfall { to { transform: translateY(110vh) rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<div class="snow-overlay" id="snowContainer"></div>
+
+<main style="z-index: 10; width: 100%; display: flex; justify-content: center; padding: 20px;">
+
+    <div id="welcomeScreen" class="card">
+        <div class="logo-box"><img src="https://www.is.vnu.edu.vn/wp-content/uploads/2022/04/icon_negative_yellow_text-08-539x600.png" style="width:100%"></div>
+        <h1 class="main-title">Christmas Gala</h1>
+        <p style="margin-bottom:25px; font-style:italic; color: #666;">VNU-IS International Celebration</p>
+        <button class="btn btn-gold" style="max-width:320px; margin: 0 auto;" onclick="checkAndShowForm()">✨ BEGIN CHECK-IN ✨</button>
+    </div>
+
+    <div id="formScreen" class="card hidden">
+        <h2 class="main-title" style="font-size: 30px;">Registration</h2>
+        <form onsubmit="handleSubmit(event)" style="margin-top:20px">
+            <label>Full Name</label>
+            <input type="text" id="fullname" placeholder="Enter your name" required>
+            <label>Email Address</label>
+            <input type="email" id="email" placeholder="email@example.com" required>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px">
+                <div><label>Class</label><input type="text" id="classname" placeholder="MIS K24" required></div>
+                <div><label>Nationality</label><input type="text" id="country" placeholder="Vietnam" required></div>
+            </div>
+            <button type="submit" class="btn btn-gold" style="width:100%; margin-top:10px">🎉 GET MY LUCKY CODE 🎉</button>
+        </form>
+    </div>
+
+    <div id="resultScreen" class="card hidden">
+        <div id="captureArea" style="background: white; padding: 10px; border-radius: 15px;">
+            <div class="logo-box" style="width:60px; height:60px;"><img src="https://www.is.vnu.edu.vn/wp-content/uploads/2022/04/icon_negative_yellow_text-08-539x600.png" style="width:100%"></div>
+            <h1 class="main-title">Merry Christmas!</h1>
+            <p id="resWish" style="font-size:15px; margin-bottom:25px; color: #444; line-height: 1.6;"></p>
+
+            <div class="ticket-box">
+                <p style="font-size:11px; font-weight:bold; letter-spacing:1.5px; color: var(--vnu-gold)">YOUR LUCKY NUMBER</p>
+                <div class="lucky-number" id="resLucky">--</div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; text-align:left; border-top:1.5px solid #eee; padding-top:15px; margin-top: 10px;">
+                    <div><label style="margin:0">Guest</label><div id="resName" style="font-weight:900; font-size: 16px;"></div></div>
+                    <div><label style="margin:0">Class</label><div id="resClass" style="font-weight:900; font-size: 16px;"></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-row">
+            <button class="btn btn-dark" onclick="saveCard()">SAVE PICTURE</button>
+            <button class="btn btn-gold" onclick="finishCheckin()">DONE</button>
+        </div>
+    </div>
+
+</main>
+
+<script>
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxM0yixP9vPNVrtAfiq8c90c3NDcg8V5i_U1X-pWH0dwxH8ciNb14McilgHGfzrBORodA/exec";
+
+    const wishes = [
+        "May this beautiful season bring you peace, warmth, and a sense of belonging as you celebrate ISNOW 2025 together.",
+        "Wishing you a joyful Christmas filled with meaningful moments, new friendships, and unforgettable memories at ISNOW 2025.",
+        "Merry Christmas! May love, kindness, and happiness follow you throughout the holiday season and beyond.",
+        "As the year comes to an end, may Christmas bring you reflection, gratitude, and hope for a brighter future.",
+        "Wishing you a peaceful Christmas filled with laughter, warmth, and shared moments with friends from all around the world.",
+        "May this festive season light up your heart and inspire you to keep moving forward with confidence and joy.",
+        "Merry Christmas to all ISNOW 2025 participants—thank you for making this community vibrant, diverse, and inspiring.",
+        "May the spirit of Christmas bring comfort to your heart and strength to your dreams.",
+        "Wishing you a season filled with simple joys, genuine smiles, and unforgettable connections.",
+        "May this Christmas be a reminder that kindness and unity can cross all cultures and borders.",
+        "Merry Christmas! May you feel supported, appreciated, and inspired wherever you are.",
+        "Wishing you warmth not only from lights and gifts, but from friendships built during ISNOW 2025.",
+        "May Christmas bring you moments of calm, happiness, and renewed motivation for the year ahead.",
+        "Merry Christmas! May this season help you slow down, reflect, and enjoy the present moment.",
+        "Wishing you a joyful holiday filled with peace, love, and positive energy.",
+        "May your Christmas be as bright as your potential and as warm as the friendships you’ve made.",
+        "Merry Christmas! Thank you for being a part of our international student journey.",
+        "May this festive season bring you closer to your goals and dreams.",
+        "Wishing you a Christmas full of meaning, growth, and inspiration.",
+        "Merry Christmas! May cultural diversity and shared experiences make your holiday even more special.",
+        "Wishing you a Christmas where different languages, cultures, and stories come together in harmony.",
+        "May ISNOW 2025 remind you that home can be found wherever there is understanding and friendship.",
+        "Merry Christmas! May this season celebrate not only traditions, but also unity in diversity.",
+        "Wishing you a holiday where cultural differences become beautiful connections.",
+        "May Christmas at ISNOW 2025 be a symbol of global friendship and mutual respect.",
+        "Merry Christmas! May you feel proud of your identity and excited to learn from others.",
+        "Wishing you a festive season enriched by cultural exchange and meaningful conversations.",
+        "May this Christmas show you that diversity is a strength that brings us closer together.",
+        "Merry Christmas to our international and Vietnamese students—together, we create something truly special.",
+        "Wishing you joy as you celebrate Christmas away from home, surrounded by new friends.",
+        "May the spirit of ISNOW 2025 make your Christmas warm, inclusive, and unforgettable.",
+        "Merry Christmas! May global friendships made here last far beyond this holiday season.",
+        "Wishing you a season filled with understanding, openness, and cultural appreciation.",
+        "May Christmas remind you that differences connect us rather than divide us.",
+        "Merry Christmas! Thank you for sharing your culture, stories, and energy with ISNOW 2025.",
+        "Wishing you a holiday where every culture is respected and every voice is heard.",
+        "May this festive season deepen your global perspective and personal growth.",
+        "Merry Christmas! May ISNOW 2025 always feel like a second home to you.",
+        "Wishing you a truly international Christmas full of warmth and connection."
+    ];
+
+    function checkAndShowForm() {
+        if (localStorage.getItem('isnow_checked_in')) {
+            alert("You have already checked in! Merry Christmas!");
+            return;
+        }
+        document.getElementById('welcomeScreen').classList.add('hidden');
+        document.getElementById('formScreen').classList.remove('hidden');
+    }
+
+    function createFirework() {
+        const icons = ['🎅', '🎄', '🎁', '✨', '❄️', '🔔', '⛄', '🦌', '🕯️'];
+        for (let i = 0; i < 40; i++) {
+            const el = document.createElement('div');
+            el.className = 'firework-icon';
+            el.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            el.style.left = '50%';
+            el.style.top = '50%';
+            const tx = (Math.random() - 0.5) * 800 + 'px';
+            const ty = (Math.random() - 0.5) * 800 + 'px';
+            el.style.setProperty('--tx', tx);
+            el.style.setProperty('--ty', ty);
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 2000);
+        }
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        const lucky = Math.floor(Math.random() * 100) + 1;
+        const name = document.getElementById('fullname').value;
+        const data = {
+            email: document.getElementById('email').value,
+            fullname: name,
+            classname: document.getElementById('classname').value,
+            country: document.getElementById('country').value,
+            time: new Date().toLocaleString(),
+            luckynumber: lucky
+        };
+
+        try {
+            fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: new URLSearchParams(data), mode: 'no-cors' });
+            
+            document.getElementById('resName').textContent = name;
+            document.getElementById('resClass').textContent = data.classname;
+            document.getElementById('resLucky').textContent = lucky;
+            
+            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+            document.getElementById('resWish').innerHTML = `Dear <b>${name}</b>, ${randomWish}`;
+
+            createFirework();
+            document.getElementById('formScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+        } catch(err) { alert("An error occurred. Please try again!"); }
+    }
+
+    function finishCheckin() {
+        localStorage.setItem('isnow_checked_in', 'true');
+        location.reload();
+    }
+
+    async function saveCard() {
+        const canvas = await html2canvas(document.getElementById('captureArea'), { scale: 2 });
+        const link = document.createElement('a');
+        link.download = `VNU_Christmas_Ticket_${Date.now()}.png`;
+        link.href = canvas.toDataURL();
+        link.click();
+    }
+
+    setInterval(() => {
+        const s = document.createElement('div');
+        s.className = 'snowflake';
+        s.innerHTML = '❄';
+        s.style.left = Math.random() * 100 + 'vw';
+        s.style.fontSize = Math.random() * 10 + 10 + 'px';
+        s.style.opacity = Math.random();
+        s.style.animationDuration = Math.random() * 3 + 4 + 's';
+        document.getElementById('snowContainer').appendChild(s);
+        setTimeout(() => s.remove(), 6000);
+    }, 200);
+</script>
+</body>
+</html>
