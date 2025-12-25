@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VNU-IS | ISNOW Christmas Gala 2025</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --vnu-red: #8B1538;
+            --vnu-gold: #D4AF37;
+            --christmas-red: #C41E3A;
+            --card-radius: 30px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Georgia', 'Palatino', serif; }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                        url('https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1920') center/cover no-repeat fixed;
+            display: flex; align-items: center; justify-content: center; overflow-x: hidden; position: relative;
+        }
+
+        .snow-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+        
+        /* Hiệu ứng Logo xoay 1 vòng khi load */
+        .logo-box {
+            width: 75px; height: 75px; background: white; border-radius: 18px;
+            padding: 8px; margin: 0 auto 20px; display: flex; align-items: center;
+            justify-content: center; box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            animation: logoRotate360 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes logoRotate360 {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .card {
+            width: 95%; max-width: 640px; background: #fff; border-radius: var(--card-radius);
+            padding: 40px 30px; text-align: center; position: relative; overflow: hidden;
+            border: 6px double var(--vnu-gold);
+            box-shadow: 0 0 0 3px var(--christmas-red), 0 25px 80px rgba(0,0,0,0.8);
+            z-index: 2;
+        }
+
+        .main-title { color: var(--christmas-red); font-size: 34px; font-weight: 900; margin-bottom: 8px; }
+        
+        /* Hiệu ứng BÙM ra con số */
+        .lucky-number {
+            font-family: 'Courier New', monospace; font-size: 80px; font-weight: 950;
+            color: var(--christmas-red); line-height: 1; margin: 15px 0;
+            text-shadow: 2px 2px 0 rgba(212, 175, 55, 0.2);
+            animation: boomNumber 0.6s cubic-bezier(0.17, 0.89, 0.32, 1.49) forwards;
+        }
+        @keyframes boomNumber {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.3); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .ticket-box {
+            width: 100%; border: 2.5px dashed var(--vnu-gold); border-radius: 15px;
+            padding: 25px; margin-bottom: 25px; position: relative; background: rgba(255, 250, 240, 0.85);
+        }
+
+        /* Nút bấm căn giữa trên 1 hàng */
+        .btn-row { 
+            display: flex; gap: 12px; width: 100%; justify-content: center; margin-top: 15px;
+        }
+        .btn {
+            flex: 0 1 200px; padding: 16px; border-radius: 12px; border: none;
+            font-weight: 800; font-size: 13px; cursor: pointer; text-transform: uppercase;
+            transition: 0.3s; letter-spacing: 1px;
+        }
+        .btn-gold { background: var(--vnu-gold); color: #fff; }
+        .btn-dark { background: #1a1a1a; color: #fff; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+
+        /* Hiệu ứng pháo hoa pháo giấy */
+        .firework-icon {
+            position: fixed; font-size: 24px; z-index: 9999; pointer-events: none;
+            animation: explode 1.5s ease-out forwards;
+        }
+        @keyframes explode {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+        }
+
+        .hidden { display: none !important; }
+        input { width: 100%; padding: 12px; border: 1.5px solid #eee; border-radius: 10px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="snow-overlay" id="snowContainer"></div>
+
+<main style="z-index: 10; width: 100%; display: flex; justify-content: center; padding: 20px;">
+
+    <div id="welcomeScreen" class="card">
+        <div class="logo-box"><img src="https://www.is.vnu.edu.vn/wp-content/uploads/2022/04/icon_negative_yellow_text-08-539x600.png" style="width:100%"></div>
+        <h1 class="main-title">Christmas Gala</h1>
+        <p style="margin-bottom:20px; font-style:italic">VNU-IS International Celebration</p>
+        <button class="btn btn-gold" onclick="checkAndShowForm()">✨ BEGIN CHECK-IN ✨</button>
+    </div>
+
+    <div id="formScreen" class="card hidden">
+        <h2 class="main-title" style="font-size: 28px;">Registration</h2>
+        <form onsubmit="handleSubmit(event)" style="text-align:left; margin-top:20px">
+            <label style="font-size:12px; font-weight:bold">Full Name</label>
+            <input type="text" id="fullname" required>
+            <label style="font-size:12px; font-weight:bold">Email</label>
+            <input type="email" id="email" required>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px">
+                <div><label style="font-size:12px; font-weight:bold">Class</label><input type="text" id="classname" required></div>
+                <div><label style="font-size:12px; font-weight:bold">Nationality</label><input type="text" id="country" required></div>
+            </div>
+            <button type="submit" class="btn btn-gold" style="width:100%; margin-top:10px">🎉 GET LUCKY CODE 🎉</button>
+        </form>
+    </div>
+
+    <div id="resultScreen" class="card hidden">
+        <div id="captureArea">
+            <div class="logo-box" style="width:55px; height:55px;"><img src="https://www.is.vnu.edu.vn/wp-content/uploads/2022/04/icon_negative_yellow_text-08-539x600.png" style="width:100%"></div>
+            <h1 class="main-title">Merry Christmas!</h1>
+            <p id="resWish" style="font-size:14px; margin-bottom:20px"></p>
+
+            <div class="ticket-box">
+                <p style="font-size:10px; font-weight:bold; letter-spacing:1px">YOUR LUCKY NUMBER</p>
+                <div class="lucky-number" id="resLucky">--</div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; text-align:left; border-top:1px solid #eee; padding-top:10px">
+                    <div><small>Guest</small><div id="resName" style="font-weight:bold"></div></div>
+                    <div><small>Class</small><div id="resClass" style="font-weight:bold"></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-row">
+            <button class="btn btn-dark" onclick="saveCard()">SAVE PICTURE</button>
+            <button class="btn btn-gold" onclick="finishCheckin()">DONE</button>
+        </div>
+    </div>
+
+</main>
+
+<script>
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxM0yixP9vPNVrtAfiq8c90c3NDcg8V5i_U1X-pWH0dwxH8ciNb14McilgHGfzrBORodA/exec";
+
+    function checkAndShowForm() {
+        if (localStorage.getItem('isnow_checked_in')) {
+            alert("Bạn đã check-in rồi! Chúc mừng Giáng sinh!");
+            return;
+        }
+        document.getElementById('welcomeScreen').classList.add('hidden');
+        document.getElementById('formScreen').classList.remove('hidden');
+    }
+
+    // Hiệu ứng pháo hoa Icon
+    function createFirework() {
+        const icons = ['🎅', '🎄', '🎁', '✨', '❄️', '🔔'];
+        for (let i = 0; i < 30; i++) {
+            const el = document.createElement('div');
+            el.className = 'firework-icon';
+            el.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            el.style.left = '50%';
+            el.style.top = '50%';
+            
+            const tx = (Math.random() - 0.5) * 600 + 'px';
+            const ty = (Math.random() - 0.5) * 600 + 'px';
+            el.style.setProperty('--tx', tx);
+            el.style.setProperty('--ty', ty);
+            
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1500);
+        }
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        const lucky = Math.floor(Math.random() * 100) + 1;
+        const name = document.getElementById('fullname').value;
+        const data = {
+            email: document.getElementById('email').value,
+            fullname: name,
+            classname: document.getElementById('classname').value,
+            country: document.getElementById('country').value,
+            time: new Date().toLocaleString(),
+            luckynumber: lucky
+        };
+
+        try {
+            fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: new URLSearchParams(data), mode: 'no-cors' });
+            
+            document.getElementById('resName').textContent = name;
+            document.getElementById('resClass').textContent = data.classname;
+            document.getElementById('resLucky').textContent = lucky;
+            document.getElementById('resWish').innerHTML = `Dear <b>${name}</b>, Wishing you a magical Christmas!`;
+
+            createFirework(); // Bắn pháo hoa khi xong
+            document.getElementById('formScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+        } catch(err) { alert("Lỗi!"); }
+    }
+
+    function finishCheckin() {
+        localStorage.setItem('isnow_checked_in', 'true');
+        location.reload();
+    }
+
+    async function saveCard() {
+        const canvas = await html2canvas(document.getElementById('captureArea'));
+        const link = document.createElement('a');
+        link.download = 'MerryChristmas_VNU.png';
+        link.href = canvas.toDataURL();
+        link.click();
+    }
+</script>
+</body>
+</html>
