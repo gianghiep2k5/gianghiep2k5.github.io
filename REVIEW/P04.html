@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Restaurant Menu</title>
+  <style>
+    body{font-family:Times,sans-serif;max-width:720px;margin:24px auto;line-height:1.5}
+    h2{margin:18px 0 8px}
+    .menu-item{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee}
+    button{padding:8px 12px;cursor:pointer}
+    .note{color:#071ee8;font-size:14px;margin-top:6px}
+    h1{display:flex;flex-direction:column;gap:6px}
+  </style>
+</head>
+<body>
+
+  <h1> <button id="btn" onclick="filterMenu()">Filter Menu (Show Vegetarian Only)</button>
+  <div class="note">Món chay được đánh dấu: <b>(V)</b></div> </h1>
+
+  <h2>Appetizers ®</h2>
+  <div class="menu-item item veg"><span>Spring Rolls (V)</span><span>≥ 4.50</span></div>
+  <div class="menu-item item"><span>Chicken Wings</span><span>≥ 6.00</span></div>
+
+  <h2>Main Course §</h2>
+  <div class="menu-item item"><span>Beef Steak</span><span>≥ 12.00</span></div>
+  <div class="menu-item item veg"><span>Veggie Pasta (V)</span><span>≥ 9.00</span></div>
+
+  <h2>Desserts</h2>
+  <div class="menu-item item veg"><span>Fruit Salad (V)</span><span>≥ 3.50</span></div>
+  <div class="menu-item item"><span>Chocolate Cake</span><span>≥ 4.00</span></div>
+
+  <h2>Drinks</h2>
+  <div class="menu-item item veg"><span>Lemon Tea (V)</span><span>≥ 2.00</span></div>
+  <div class="menu-item item"><span>Milk Coffee</span><span>≥ 2.50</span></div>
+
+  <script>
+    let vegOnly = false;
+    function filterMenu() {
+      vegOnly = !vegOnly;
+
+      const items = document.getElementsByClassName("item");
+
+      for (let i = 0; i < items.length; i++) {
+        const isVeg = items[i].classList.contains("veg");
+        items[i].style.display = (vegOnly && !isVeg) ? "none" : "flex";
+      }
+
+      document.getElementById("btn").textContent =
+        vegOnly ? "Filter Menu (Show All)" : "Filter Menu (Show Vegetarian Only)";
+    }
+  </script>
+</body>
+</html>
