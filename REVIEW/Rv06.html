@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Review - Form Validation</title>
+    <style>
+        :root{
+            --bg:#f4f7fb;
+            --card:#fff;
+            --accent:#4a90e2;
+            --danger:#e74c3c;
+            --ok:#2ecc71;
+            --muted:#666;
+        }
+        html,body{height:100%;margin:0;font-family:system-ui,Segoe UI,Roboto,Arial; background:var(--bg); color:#222}
+        .page{min-height:100%;display:flex;align-items:center;justify-content:center;padding:40px}
+        .card{background:var(--card);padding:28px;border-radius:10px;box-shadow:0 6px 24px rgba(15,20,30,0.08);width:420px}
+        h1{margin:0 0 12px;font-size:18px}
+        form{display:flex;flex-direction:column;gap:12px}
+        .row{display:flex;flex-direction:column}
+        label{font-size:13px;color:var(--muted);margin-bottom:6px}
+        input[type="text"], input[type="password"], input[type="file"]{padding:10px 12px;border:1px solid #e3e6ea;border-radius:6px;font-size:14px}
+        .file-input{display:flex;align-items:center;gap:8px}
+        .hint{font-size:12px;color:var(--muted)}
+        .errors{color:var(--danger);font-size:13px;margin-top:6px}
+        .actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+        button{background:var(--accent);color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer}
+        button[disabled]{opacity:.6;cursor:not-allowed}
+
+        /* Password strength */
+        .strength{display:flex;align-items:center;gap:8px;margin-top:6px}
+        .strength-bar{width:100px;height:8px;background:#eee;border-radius:6px;overflow:hidden}
+        .strength-fill{height:100%;width:0;transition:width .2s ease;background:var(--danger)}
+        .strength-text{font-size:13px;color:var(--muted)}
+
+        /* Responsive */
+        @media (max-width:480px){.card{width:100%;padding:18px}}
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="card">
+            <h1>Create your account</h1>
+            <form id="signupForm" novalidate>
+                <div class="row">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text" placeholder="5-15 characters" minlength="5" maxlength="15" required>
+                    <div id="usernameError" class="errors" aria-live="polite"></div>
+                </div>
+
+                <div class="row">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Use letters and numbers" required>
+                    <div class="strength">
+                        <div class="strength-bar" aria-hidden="true"><div id="strengthFill" class="strength-fill"></div></div>
+                        <div id="strengthText" class="strength-text"> </div>
+                    </div>
+                    <div id="passwordError" class="errors" aria-live="polite"></div>
+                </div>
+
+                <div class="row">
+                    <label for="profilePic">Profile Picture</label>
+                    <input id="profilePic" name="profilePic" class="file-input" type="file" accept="image/png, image/jpeg">
+                    <div id="fileError" class="errors" aria-live="polite"></div>
+                    <div class="hint">Accepted formats: JPG, PNG</div>
+                </div>
+
+                <div class="actions">
+                    <div class="hint">All fields required</div>
+                    <button id="submitBtn" type="submit">Sign up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Elements
+        const form = document.getElementById('signupForm');
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const profilePic = document.getElementById('profilePic');
+        const usernameError = document.getElementById('usernameError');
+        const passwordError = document.getElementById('passwordError');
+        const fileError = document.getElementById('fileError');
+        const strengthFill = document.getElementById('strengthFill');
+        const strengthText = document.getElementById('strengthText');
+
+        // Validation helpers
+        const hasLetter = str => /[A-Za-z]/.test(str);
+        const hasNumber = str => /[0-9]/.test(str);
+        const hasSpecial = str => /[^A-Za-z0-9]/.test(str);
+
+        function updatePasswordStrength(pw){
+            let score = 0;
+            if(pw.length >= 6) score++;
+            if(hasLetter(pw) && hasNumber(pw)) score++;
+            if(pw.length >= 10 && hasSpecial(pw)) score++;
+
+            // Update UI
+            if(score <= 0){ strengthFill.style.width = '0%'; strengthFill.style.background = '#eee'; strengthText.textContent = ''; }
+            else if(score === 1){ strengthFill.style.width = '33%'; strengthFill.style.background = 'var(--danger)'; strengthText.textContent = 'Weak'; }
+            else if(score === 2){ strengthFill.style.width = '66%'; strengthFill.style.background = '#f1c40f'; strengthText.textContent = 'Medium'; }
+            else { strengthFill.style.width = '100%'; strengthFill.style.background = 'var(--ok)'; strengthText.textContent = 'Strong'; }
+        }
+
+        // Real-time strength update
+        password.addEventListener('input', (e)=>{
+            updatePasswordStrength(e.target.value);
+            // live simple validation hint
+            if(e.target.value && !(hasLetter(e.target.value) && hasNumber(e.target.value))){
+                passwordError.textContent = 'Password should contain both letters and numbers.';
+            } else {
+                passwordError.textContent = '';
+            }
+        });
+
+        // Username live validation
+        username.addEventListener('input', ()=>{
+            const v = username.value.trim();
+            if(v.length < 5) usernameError.textContent = 'Minimum 5 characters.';
+            else if(v.length > 15) usernameError.textContent = 'Maximum 15 characters.';
+            else usernameError.textContent = '';
+        });
+
+        // File change validation
+        profilePic.addEventListener('change', ()=>{
+            fileError.textContent = '';
+            const f = profilePic.files[0];
+            if(!f) return;
+            const allowed = ['image/jpeg','image/png'];
+            if(!allowed.includes(f.type)){
+                fileError.textContent = 'Only JPG or PNG images are allowed.';
+                profilePic.value = '';
+            }
+        });
+
+        // Form submit
+        form.addEventListener('submit', (e)=>{
+            e.preventDefault();
+            let ok = true;
+
+            // Username
+            const u = username.value.trim();
+            if(u.length < 5 || u.length > 15){ usernameError.textContent = 'Username must be 5-15 characters.'; ok = false; }
+            else usernameError.textContent = '';
+
+            // Password
+            const pw = password.value;
+            if(!(hasLetter(pw) && hasNumber(pw))){ passwordError.textContent = 'Password must contain both letters and numbers.'; ok = false; }
+            else passwordError.textContent = '';
+
+            // File
+            const f = profilePic.files[0];
+            if(!f){ fileError.textContent = 'Please select a profile image (JPG/PNG).'; ok = false; }
+            else if(!['image/jpeg','image/png'].includes(f.type)){ fileError.textContent = 'Only JPG or PNG images are allowed.'; ok = false; }
+            else fileError.textContent = '';
+
+            if(!ok) return;
+
+            // Demo success action
+            alert('Form submitted successfully (demo).');
+            form.reset();
+            updatePasswordStrength('');
+        });
+    </script>
+</body>
+</html>

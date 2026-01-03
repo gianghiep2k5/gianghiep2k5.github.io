@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>Bài 1: User Registration</title>
+  <style>
+
+    /* Căn giữa toàn bộ nội dung */
+    .container{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center; /* giữa theo chiều dọc */
+      align-items:center;     /* giữa theo chiều ngang */
+      gap:16px;
+    }
+
+    .form-container{
+      width:300px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      padding:20px;
+      border:1px solid #ccc;
+      background:#fff;
+    }
+
+
+    .strength-weak{color:red;}
+    .strength-medium{color:orange;}
+    .strength-strong{color:green;}
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Đăng ký tài khoản</h2>
+
+    <form class="form-container">
+      <label>Username (5-15 ký tự):</label>
+      <input type="text" id="username" minlength="5" maxlength="15" required>
+
+      <label>Password:</label>
+      <input type="password" id="password" required>
+      <div>Độ mạnh: <span id="strengthText">Chưa nhập</span></div>
+
+      <label>Profile Picture (JPG/PNG):</label>
+      <input type="file" id="profilePic" accept=".jpg,.png" required>
+
+      <button type="submit">Đăng ký</button>
+    </form>
+  </div>
+
+  <script>
+    const passwordInput = document.getElementById('password');
+    const strengthText = document.getElementById('strengthText');
+
+    passwordInput.addEventListener('input', function () {
+      const value = passwordInput.value;
+      let strength = 'Chưa nhập', className = '';
+
+      if (value.length === 0) { strength = 'Chưa nhập'; }
+      else if (value.length < 6) { strength = 'Yếu'; className = 'strength-weak'; }
+      else if (value.length < 10) { strength = 'Trung bình'; className = 'strength-medium'; }
+      else { strength = 'Mạnh'; className = 'strength-strong'; }
+
+      strengthText.textContent = strength;
+      strengthText.className = className;
+    });
+  </script>
+
+</body>
+</html>

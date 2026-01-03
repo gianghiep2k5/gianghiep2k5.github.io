@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>Bài 6: Bookstore Nav</title>
+    <style>
+        .hidden { display: none; } /*  */
+        nav ul { list-style: none; display: flex; gap: 10px; }
+    </style>
+</head>
+<body>
+    <button onclick="toggleMenu()">Menu</button> <nav id="navbar" class="">
+        <ul>
+            <li>Home</li> <li>•</li> <li>Books</li> <li>•</li>
+            <li>Authors ™</li> <li>•</li> <li>Contact</li>
+        </ul>
+    </nav>
+
+    <script>
+        function toggleMenu() {
+            // Sử dụng classList.toggle 
+            document.getElementById('navbar').classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

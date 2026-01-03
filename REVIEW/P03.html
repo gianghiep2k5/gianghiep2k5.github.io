@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Student Grade Calculator</title>
+  <style>
+    table{border-collapse:collapse; width:360px}
+    th,td{border:1px solid #000; padding:8px}
+    tr:nth-child(even){background:#f2f2f2;}  /* xen kẽ màu dòng */
+  </style>
+</head>
+<body>
+
+<h3>Grade Calculator &reg; - Fee: $0 - Pass if avg &ge; 5</h3>
+
+<table id="t">
+  <tr><th>Subject</th><th>Grade</th></tr>
+  <tr><td>Math</td><td>8</td></tr>
+  <tr><td>English</td><td>7</td></tr>
+  <tr><td>IT</td><td>9</td></tr>
+  <tr><td>History</td><td>6</td></tr>
+</table>
+
+<button type="button" onclick="calculateAverage()">Calculate Average</button>
+<p id="avg"></p>
+
+<script>
+function calculateAverage(){
+  const cells = document.querySelectorAll("#t tr:not(:first-child) td:last-child");
+  let sum = 0;
+  cells.forEach(td => sum += Number(td.textContent));
+  document.getElementById("avg").textContent = "Average: " + (sum/cells.length).toFixed(2);
+}
+</script>
+</body>
+</html>
