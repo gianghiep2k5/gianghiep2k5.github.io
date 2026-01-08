@@ -1,54 +1,63 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Restaurant Menu</title>
-  <style>
-    body{font-family:Times,sans-serif;max-width:720px;margin:24px auto;line-height:1.5}
-    h2{margin:18px 0 8px}
-    .menu-item{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee}
-    button{padding:8px 12px;cursor:pointer}
-    .note{color:#071ee8;font-size:14px;margin-top:6px}
-    h1{display:flex;flex-direction:column;gap:6px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <style>
+        body { font-family: 'Times New Roman', Times, serif; line-height: 1.6; padding: 20px; }
+        .menu-section {argin-bottom: 20px; }
+        .item { padding: 5px; border-bottom: 1px dashed #ccc; }
+        .veg { color: green; font-weight: bold; }
+        .hidden { display: none; }
+        button { padding: 10px 20px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 5px; }
+    </style>
 </head>
 <body>
 
-  <h1> <button id="btn" onclick="filterMenu()">Filter Menu (Show Vegetarian Only)</button>
-  <div class="note">Món chay được đánh dấu: <b>(V)</b></div> </h1>
+    <h1>My Restaurant be Welcome</h1>
+    <button onclick="filterMenu()">Vegetarain Menu</button>
 
-  <h2>Appetizers ®</h2>
-  <div class="menu-item item veg"><span>Spring Rolls (V)</span><span>≥ 4.50</span></div>
-  <div class="menu-item item"><span>Chicken Wings</span><span>≥ 6.00</span></div>
+    <div class="menu-section">
+        <h2>Appetizers ®</h2>
+        <div class="item veg">Salad - ≥15</div>
+        <div class="item">Chicken Soup - ≥20</div>
+    </div>
 
-  <h2>Main Course §</h2>
-  <div class="menu-item item"><span>Beef Steak</span><span>≥ 12.00</span></div>
-  <div class="menu-item item veg"><span>Veggie Pasta (V)</span><span>≥ 9.00</span></div>
+    <div class="menu-section">
+        <h2>Main Course §</h2>
+        <div class="item">Fish Soup - ≥50</div>
+        <div class="item veg">Stir-fried cabbage ≥35</div>
+    </div>
 
-  <h2>Desserts</h2>
-  <div class="menu-item item veg"><span>Fruit Salad (V)</span><span>≥ 3.50</span></div>
-  <div class="menu-item item"><span>Chocolate Cake</span><span>≥ 4.00</span></div>
+    <div class="menu-section">
+        <h2>Desserts</h2>
+        <div class="item veg">Fruits - ≥10</div>
+        <div class="item">Crab Soup - ≥15</div>
+    </div>
 
-  <h2>Drinks</h2>
-  <div class="menu-item item veg"><span>Lemon Tea (V)</span><span>≥ 2.00</span></div>
-  <div class="menu-item item"><span>Milk Coffee</span><span>≥ 2.50</span></div>
+    <div class="menu-section">
+        <h2>Drinks</h2>
+        <div class="item">Sausage - ≥8</div>
+        <div class="item veg">Orange fruits - ≥12</div>
+    </div>
 
-  <script>
-    let vegOnly = false;
-    function filterMenu() {
-      vegOnly = !vegOnly;
+    <script>
+        let showingAll = true;
 
-      const items = document.getElementsByClassName("item");
+        function filterMenu() {
+            // Sử dụng getElementsByClassName theo yêu cầu
+            const items = document.getElementsByClassName('item');
+            showingAll = !showingAll;
 
-      for (let i = 0; i < items.length; i++) {
-        const isVeg = items[i].classList.contains("veg");
-        items[i].style.display = (vegOnly && !isVeg) ? "none" : "flex";
-      }
+            for (let i = 0; i < items.length; i++) {
+                // Nếu item KHÔNG có class 'veg' (không phải đồ chay)
+                if (!items[i].classList.contains('veg')) {
+                    items[i].classList.toggle('hidden', !showingAll);
+                }
+            }
+        }
+    </script>
 
-      document.getElementById("btn").textContent =
-        vegOnly ? "Filter Menu (Show All)" : "Filter Menu (Show Vegetarian Only)";
-    }
-  </script>
 </body>
 </html>

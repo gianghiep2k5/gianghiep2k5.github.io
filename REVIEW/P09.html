@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body{font-family:Arial;padding:20px;background:#f5f5f5}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{background:#fff;padding:20px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);transition:transform 0.3s}
+.card:hover{transform:translateY(-5px);box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+.price{color:#2196F3;font-size:20px;font-weight:bold;margin:10px 0}
+button{padding:10px 20px;background:#2196F3;color:#fff;border:none;border-radius:4px;cursor:pointer;margin-top:20px}
+button:hover{background:#1976D2}
+</style>
+</head>
+<body>
+<h2>Product Showcase</h2>
+<div class="grid">
+<div class="card">
+<h3>Laptop Pro ®</h3>
+<p class="price">€999 →</p>
+<p>High performance laptop for professionals</p>
+</div>
+<div class="card">
+<h3>Smartphone X ®</h3>
+<p class="price">€699 →</p>
+<p>Latest smartphone with amazing features</p>
+</div>
+<div class="card">
+<h3>Tablet Plus ®</h3>
+<p class="price">€499 →</p>
+<p>Portable tablet for work and entertainment</p>
+</div>
+<div class="card">
+<h3>Smartwatch ®</h3>
+<p class="price">€299 →</p>
+<p>Track your health and stay connected</p>
+</div>
+</div>
+<button onclick="togglePrice()">Toggle Price</button>
+<script>
+function togglePrice(){
+const prices=document.getElementsByClassName('price');
+for(let i=0;i<prices.length;i++){
+prices[i].style.display=prices[i].style.display==='none'?'block':'none';
+}
+}
+</script>
+</body>
+</html>

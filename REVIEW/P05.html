@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabbed Content</title>
+</head>
+<style>
+    .tab{padding:15px;cursor:pointer;background:#ddd;display:inline-block}
+    .tab.active{background:#fff;color:#2196F3}
+    .tab.active::after{content:' →'}
+    .content{display:none;padding:20px}
+    .content.active{display:block}
+</style>
+<body>
+    <div class="tab active" onclick="switchTab('f')">Features ®</div>
+    <div class="tab" onclick="switchTab('p')">Pricing €</div>
+    <div class="tab" onclick="switchTab('r')">Reviews</div>
+    <div class="tab" onclick="switchTab('s')">Support</div>
+    <div id="f" class="content active">Features content</div>
+    <div id="p" class="content">Pricing content</div>
+    <div id="r" class="content">Reviews content</div>
+    <div id="s" class="content">Support content</div>
+<script>
+    function switchTab(id){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById(id).classList.add('active');
+    }
+</script>
+</body>
+</html>
