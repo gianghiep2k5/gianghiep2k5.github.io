@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trò Chơi Từ Vựng</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .score-item {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .score-number {
+            font-size: 2em;
+            color: #d63031;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .question-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .word {
+            text-align: center;
+            font-size: 3em;
+            color: #2d3436;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .option-btn {
+            padding: 20px;
+            font-size: 1.3em;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            background: white;
+            color: #2d3436;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .option-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%);
+            color: white;
+        }
+
+        .option-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 5em;
+            margin: 20px 0;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .correct {
+            animation: celebrate 0.6s ease;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-10deg) scale(1.2); }
+            75% { transform: rotate(10deg) scale(1.2); }
+        }
+
+        .next-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .finish-screen {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .finish-screen h2 {
+            font-size: 2.5em;
+            color: #d63031;
+            margin-bottom: 20px;
+        }
+
+        .restart-btn {
+            padding: 15px 40px;
+            font-size: 1.3em;
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌟 Học Từ Vựng 🌟</h1>
+        
+        <div class="score-board">
+            <div class="score-item">
+                <div>✅ Đúng</div>
+                <span class="score-number" id="correct">0</span>
+            </div>
+            <div class="score-item">
+                <div>❌ Sai</div>
+                <span class="score-number" id="wrong">0</span>
+            </div>
+        </div>
+
+        <div id="quiz-container">
+            <div class="question-card">
+                <div class="word" id="word"></div>
+                <div class="options" id="options"></div>
+            </div>
+            
+            <div class="feedback" id="feedback"></div>
+            
+            <button class="next-btn hidden" id="next-btn">Câu Tiếp Theo ➡️</button>
+        </div>
+
+        <div id="finish-screen" class="finish-screen hidden">
+            <h2>🎉 Hoàn Thành! 🎉</h2>
+            <div style="font-size: 1.5em; margin: 20px 0;">
+                <p>Số câu đúng: <span style="color: #00b894; font-weight: bold;" id="final-correct">0</span></p>
+                <p>Số câu sai: <span style="color: #d63031; font-weight: bold;" id="final-wrong">0</span></p>
+            </div>
+            <div id="message" style="font-size: 1.8em; font-weight: bold; margin: 30px 0; padding: 20px; border-radius: 15px; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);"></div>
+            <button class="restart-btn" onclick="restartQuiz()">🔄 Chơi Lại</button>
+        </div>
+    </div>
+
+    <script>
+        const vocabulary = [
+            { word: 'meadow', correct: 'đồng cỏ', options: ['đồng cỏ', 'sông', 'suối'] },
+            { word: 'lake', correct: 'hồ', options: ['hồ', 'núi', 'rừng'] },
+            { word: 'mountain', correct: 'núi', options: ['núi', 'hồ', 'đồng cỏ'] },
+            { word: 'wildlife', correct: 'động vật hoang dã', options: ['động vật hoang dã', 'cây cối', 'đá'] },
+            { word: 'stream', correct: 'suối', options: ['suối', 'biển', 'ao'] },
+            { word: 'river', correct: 'sông', options: ['sông', 'suối', 'hồ'] },
+            { word: 'forest', correct: 'rừng', options: ['rừng', 'sa mạc', 'thảo nguyên'] },
+            { word: 'sunrise', correct: 'bình minh', options: ['bình minh', 'hoàng hôn', 'ban đêm'] }
+        ];
+
+        let currentQuestion = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let answered = false;
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function loadQuestion() {
+            answered = false;
+            const question = vocabulary[currentQuestion];
+            document.getElementById('word').textContent = question.word;
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('next-btn').classList.add('hidden');
+
+            const shuffledOptions = shuffleArray(question.options);
+            const optionsHTML = shuffledOptions.map(option => 
+                `<button class="option-btn" onclick="checkAnswer('${option}')">${option}</button>`
+            ).join('');
+            
+            document.getElementById('options').innerHTML = optionsHTML;
+        }
+
+        function checkAnswer(selected) {
+            if (answered) return;
+            answered = true;
+
+            const question = vocabulary[currentQuestion];
+            const feedbackEl = document.getElementById('feedback');
+            
+            if (selected === question.correct) {
+                correctCount++;
+                feedbackEl.innerHTML = '<span class="correct">😊🎉✨</span>';
+                document.getElementById('correct').textContent = correctCount;
+            } else {
+                wrongCount++;
+                feedbackEl.innerHTML = '<span>😢💧</span>';
+                document.getElementById('wrong').textContent = wrongCount;
+            }
+
+            document.getElementById('next-btn').classList.remove('hidden');
+
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                btn.style.pointerEvents = 'none';
+                if (btn.textContent === question.correct) {
+                    btn.style.background = 'linear-gradient(135deg, #00b894 0%, #00cec9 100%)';
+                    btn.style.color = 'white';
+                } else if (btn.textContent === selected && selected !== question.correct) {
+                    btn.style.background = 'linear-gradient(135deg, #d63031 0%, #ff7675 100%)';
+                    btn.style.color = 'white';
+                }
+            });
+        }
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            currentQuestion++;
+            if (currentQuestion < vocabulary.length) {
+                loadQuestion();
+            } else {
+                showFinishScreen();
+            }
+        });
+
+        function showFinishScreen() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('finish-screen').classList.remove('hidden');
+            document.getElementById('final-correct').textContent = correctCount;
+            document.getElementById('final-wrong').textContent = wrongCount;
+            
+            const messageEl = document.getElementById('message');
+            if (correctCount === vocabulary.length) {
+                messageEl.textContent = '🌟 Khoai học tốt lắm! 🌟';
+                messageEl.style.color = '#00b894';
+            } else if (correctCount >= 5) {
+                messageEl.textContent = '📚 Bạn cần học thêm nữa! 📚';
+                messageEl.style.color = '#fdcb6e';
+            } else {
+                messageEl.textContent = '📖 Bạn phải học lại bài anh Hiệp dạy buổi hôm trước! 📖';
+                messageEl.style.color = '#d63031';
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            document.getElementById('correct').textContent = 0;
+            document.getElementById('wrong').textContent = 0;
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('finish-screen').classList.add('hidden');
+            loadQuestion();
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
