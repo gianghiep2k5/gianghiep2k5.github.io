@@ -1,0 +1,1 @@
+<?php echo "Hello INS3064!"; ?>
