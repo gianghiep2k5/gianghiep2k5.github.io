@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Can / I Can't - Học Động Từ Tiếng Anh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Patrick+Hand&family=Schoolbell&family=Comic+Neue:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Nunito', 'Comic Neue', 'Patrick Hand', 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 25px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-height: 85vh;
+            overflow-y: auto;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .category {
+            margin-bottom: 25px;
+        }
+
+        .category-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .vocab-list {
+            display: grid;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 12px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .vocab-item .speaker-icon {
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 1.2em;
+            margin-left: 8px;
+        }
+
+        .vocab-item:hover .speaker-icon {
+            opacity: 1;
+        }
+
+        .vocab-item:hover {
+            transform: translateX(5px);
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .vocab-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.5);
+        }
+
+        .vocab-word {
+            font-weight: 700;
+            font-size: 1.1em;
+            font-family: 'Schoolbell', 'Patrick Hand', cursive;
+            letter-spacing: 1px;
+        }
+
+        .vocab-translation {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+
+        .vocab-item.active .vocab-translation {
+            opacity: 1;
+        }
+
+        .main-panel {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            font-size: 1.3em;
+            font-weight: 800;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Schoolbell', 'Patrick Hand', cursive;
+        }
+
+        .btn-can {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn-cant {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            color: white;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn-random {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .display-area {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 25px;
+            padding: 60px 40px;
+            text-align: center;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .sentence-container {
+            background: white;
+            padding: 30px 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+            animation: bounceIn 0.6s;
+        }
+
+        .sentence {
+            font-size: 4em;
+            font-weight: 900;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-family: 'Schoolbell', 'Patrick Hand', cursive;
+        }
+
+        .sentence.can {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sentence.cant {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .emoji-display {
+            font-size: 12em;
+            animation: bounceEmoji 0.8s ease-out;
+            margin: 30px 0;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+            line-height: 1;
+        }
+
+        .verb-display {
+            background: white;
+            padding: 25px 45px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .verb-word {
+            font-size: 3em;
+            font-weight: 800;
+            color: #764ba2;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-family: 'Schoolbell', 'Patrick Hand', cursive;
+            letter-spacing: 2px;
+        }
+
+        .verb-translation {
+            font-size: 1.8em;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .pronunciation {
+            margin-top: 25px;
+            padding: 18px 35px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-radius: 15px;
+            font-size: 1.4em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
+            font-family: 'Schoolbell', 'Patrick Hand', cursive;
+            animation: pulse 2s infinite;
+        }
+
+        .pronunciation:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(17, 153, 142, 0.6);
+        }
+
+        .pronunciation:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
+            }
+            50% {
+                box-shadow: 0 6px 30px rgba(17, 153, 142, 0.7);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounceEmoji {
+            0% {
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(180deg);
+            }
+            100% {
+                transform: scale(1) rotate(360deg);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: confetti-fall 3s linear;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(600px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .star {
+            position: absolute;
+            font-size: 2em;
+            animation: star-twinkle 2s ease-in-out;
+        }
+
+        @keyframes star-twinkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        /* Scrollbar styling */
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .welcome-title {
+            font-size: 3em;
+            color: #764ba2;
+            font-weight: 800;
+            text-align: center;
+            font-family: 'Schoolbell', 'Patrick Hand', cursive;
+        }
+
+        .welcome-emoji {
+            font-size: 8em;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(20deg);
+            }
+            75% {
+                transform: rotate(-20deg);
+            }
+        }
+
+        .welcome-text {
+            font-size: 1.5em;
+            color: #666;
+            text-align: center;
+            max-width: 500px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                max-height: none;
+                position: relative;
+            }
+
+            .header h1 {
+                font-size: 2.5em;
+            }
+
+            .sentence {
+                font-size: 3em;
+            }
+
+            .emoji-display {
+                font-size: 8em;
+            }
+
+            .verb-word {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>✨ I CAN / I CAN'T ✨</h1>
+        <p>Học cách nói về những gì bạn có thể và không thể làm!</p>
+    </div>
+
+    <div class="main-container">
+        <!-- Sidebar with vocabulary -->
+        <div class="sidebar">
+            <h2>📚 Danh Sách Từ Vựng</h2>
+            
+            <div class="category">
+                <div class="category-title">🚶 Di Chuyển & Vận Động</div>
+                <div class="vocab-list" id="movement"></div>
+            </div>
+
+            <div class="category">
+                <div class="category-title">💪 Động Tác Cơ Thể</div>
+                <div class="vocab-list" id="bodyMovements"></div>
+            </div>
+
+            <div class="category">
+                <div class="category-title">🤸 Nhảy & Leo Trèo</div>
+                <div class="vocab-list" id="jumpClimb"></div>
+            </div>
+
+            <div class="category">
+                <div class="category-title">🤾 Hành Động & Thao Tác</div>
+                <div class="vocab-list" id="actions"></div>
+            </div>
+        </div>
+
+        <!-- Main display panel -->
+        <div class="main-panel">
+            <div class="controls">
+                <button class="btn btn-can" onclick="showCan()">✅ I CAN</button>
+                <button class="btn btn-cant" onclick="showCant()">❌ I CAN'T</button>
+                <button class="btn btn-random" onclick="randomSentence()">🎲 NGẪU NHIÊN</button>
+            </div>
+
+            <div class="display-area" id="displayArea">
+                <div class="welcome-screen">
+                    <div class="welcome-emoji">👋</div>
+                    <div class="welcome-title">Chào mừng!</div>
+                    <div class="welcome-text">
+                        Hãy chọn một từ vựng bên trái hoặc nhấn nút "Ngẫu nhiên" để bắt đầu học!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const vocabulary = {
+            movement: [
+                { word: 'walk', translation: 'đi bộ', emoji: '🚶', phonetic: '/wɔːk/' },
+                { word: 'run', translation: 'chạy', emoji: '🏃', phonetic: '/rʌn/' },
+                { word: 'crawl', translation: 'bò, trườn', emoji: '🐛', phonetic: '/krɔːl/' },
+                { word: 'tiptoe', translation: 'đi nhón gót chân', emoji: '🦶', phonetic: '/ˈtɪp.təʊ/' },
+                { word: 'dive', translation: 'lặn', emoji: '🤿', phonetic: '/daɪv/' },
+            ],
+            bodyMovements: [
+                { word: 'drag', translation: 'kéo', emoji: '↔️', phonetic: '/dræɡ/' },
+                { word: 'push', translation: 'đẩy', emoji: '👐', phonetic: '/pʊʃ/' },
+                { word: 'pull', translation: 'kéo, lôi', emoji: '🪢', phonetic: '/pʊl/' },
+                { word: 'lift', translation: 'nâng lên', emoji: '🏋️', phonetic: '/lɪft/' },
+                { word: 'put down', translation: 'đặt xuống', emoji: '⬇️', phonetic: '/pʊt daʊn/' },
+                { word: 'pick up', translation: 'nhặt lên', emoji: '☝️', phonetic: '/pɪk ʌp/' },
+                { word: 'hold', translation: 'giữ', emoji: '✊', phonetic: '/həʊld/' },
+                { word: 'carry', translation: 'mang, vác', emoji: '📦', phonetic: '/ˈkær.i/' },
+                { word: 'crouch', translation: 'ngồi co lại, nép mình', emoji: '🧎', phonetic: '/kraʊtʃ/' },
+                { word: 'stretch', translation: 'duỗi (tay, chân)', emoji: '🤸', phonetic: '/stretʃ/' },
+                { word: 'lean', translation: 'tựa, dựa người', emoji: '🚶‍♂️', phonetic: '/liːn/' },
+                { word: 'sit', translation: 'ngồi', emoji: '🪑', phonetic: '/sɪt/' },
+                { word: 'squat', translation: 'ngồi xổm', emoji: '🏋️‍♀️', phonetic: '/skwɒt/' },
+                { word: 'bend', translation: 'uốn cong, cúi xuống', emoji: '🧘', phonetic: '/bend/' },
+            ],
+            jumpClimb: [
+                { word: 'jump', translation: 'nhảy', emoji: '🦘', phonetic: '/dʒʌmp/' },
+                { word: 'leap', translation: 'nhảy vọt lên, nhảy vượt qua', emoji: '🐆', phonetic: '/liːp/' },
+                { word: 'hop', translation: 'nhảy lò cò, nhảy nhún một chân', emoji: '🐰', phonetic: '/hɒp/' },
+                { word: 'skip', translation: 'nhảy dây', emoji: '🪢', phonetic: '/skɪp/' },
+            ],
+            actions: [
+                { word: 'hit', translation: 'đánh', emoji: '👊', phonetic: '/hɪt/' },
+                { word: 'slap', translation: 'tát', emoji: '🖐️', phonetic: '/slæp/' },
+                { word: 'punch', translation: 'đấm', emoji: '🥊', phonetic: '/pʌntʃ/' },
+                { word: 'kick', translation: 'đá', emoji: '🦵', phonetic: '/kɪk/' },
+                { word: 'catch', translation: 'bắt', emoji: '🤲', phonetic: '/kætʃ/' },
+                { word: 'throw', translation: 'ném', emoji: '🎾', phonetic: '/θrəʊ/' },
+            ]
+        };
+
+        let currentType = '';
+        let currentVerb = null;
+        let allVocabulary = [];
+
+        function initializeVocabulary() {
+            // Flatten all vocabulary into one array
+            Object.keys(vocabulary).forEach(category => {
+                allVocabulary = allVocabulary.concat(vocabulary[category]);
+                
+                const container = document.getElementById(category);
+                vocabulary[category].forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'vocab-item';
+                    div.onclick = (e) => {
+                        // If clicking on speaker icon, just play sound
+                        if (e.target.classList.contains('speaker-icon')) {
+                            e.stopPropagation();
+                            speakWord(item.word);
+                        } else {
+                            selectVerb(item);
+                        }
+                    };
+                    div.innerHTML = `
+                        <span class="vocab-word">${item.emoji} ${item.word}</span>
+                        <span style="display: flex; align-items: center; gap: 5px;">
+                            <span class="vocab-translation">${item.translation}</span>
+                            <span class="speaker-icon">🔊</span>
+                        </span>
+                    `;
+                    container.appendChild(div);
+                });
+            });
+        }
+
+        function selectVerb(verb) {
+            // Remove active class from all items
+            document.querySelectorAll('.vocab-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to selected item
+            event.currentTarget.classList.add('active');
+            
+            currentVerb = verb;
+            if (currentType) {
+                displaySentence(currentType, currentVerb);
+            } else {
+                randomSentence();
+            }
+        }
+
+        function showCan() {
+            currentType = 'can';
+            if (!currentVerb) {
+                currentVerb = allVocabulary[Math.floor(Math.random() * allVocabulary.length)];
+            }
+            displaySentence('can', currentVerb);
+        }
+
+        function showCant() {
+            currentType = 'cant';
+            if (!currentVerb) {
+                currentVerb = allVocabulary[Math.floor(Math.random() * allVocabulary.length)];
+            }
+            displaySentence('cant', currentVerb);
+        }
+
+        function randomSentence() {
+            currentType = Math.random() > 0.5 ? 'can' : 'cant';
+            currentVerb = allVocabulary[Math.floor(Math.random() * allVocabulary.length)];
+            displaySentence(currentType, currentVerb);
+        }
+
+        function displaySentence(type, verb) {
+            const displayArea = document.getElementById('displayArea');
+            const sentence = type === 'can' ? 'I can' : "I can't";
+            const className = type === 'can' ? 'can' : 'cant';
+            
+            displayArea.innerHTML = `
+                <div class="sentence-container">
+                    <div class="sentence ${className}">${sentence}</div>
+                </div>
+                <div class="emoji-display">${verb.emoji}</div>
+                <div class="verb-display">
+                    <div class="verb-word">${verb.word}</div>
+                    <div class="verb-translation">${verb.translation}</div>
+                </div>
+                <div class="pronunciation" onclick="speakWord('${verb.word}')">
+                    🔊 Nhấn để nghe phát âm
+                </div>
+            `;
+
+            if (type === 'can') {
+                createConfetti();
+                createStars();
+            }
+
+            playSound(type);
+            
+            // Auto-play pronunciation after 0.5 seconds
+            setTimeout(() => {
+                speakWord(verb.word);
+            }, 500);
+        }
+
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#ff69b4'];
+            const displayArea = document.getElementById('displayArea');
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    displayArea.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        function createStars() {
+            const displayArea = document.getElementById('displayArea');
+            const stars = ['⭐', '✨', '🌟', '💫'];
+            
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.textContent = stars[Math.floor(Math.random() * stars.length)];
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    displayArea.appendChild(star);
+                    
+                    setTimeout(() => star.remove(), 2000);
+                }, i * 200);
+            }
+        }
+
+        function playSound(type) {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            if (type === 'can') {
+                // Happy sound - ascending notes
+                oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C
+                oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E
+                oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G
+            } else {
+                // Sad sound - descending note
+                oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.3);
+            }
+            
+            oscillator.type = 'sine';
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.4);
+        }
+
+        function speakWord(word) {
+            // Method 1: Try using Google Translate TTS API
+            const googleTTSUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=${encodeURIComponent(word)}`;
+            
+            const audio = new Audio(googleTTSUrl);
+            audio.play().catch(error => {
+                // If Google TTS fails, fallback to Web Speech API
+                console.log('Google TTS failed, using fallback');
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(word);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.7;
+                    utterance.pitch = 1.0;
+                    utterance.volume = 1.0;
+                    speechSynthesis.speak(utterance);
+                }
+            });
+        }
+
+        // Initialize the application
+        initializeVocabulary();
+    </script>
+</body>
+</html>

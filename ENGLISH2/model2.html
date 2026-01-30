@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game: I Can Challenge!</title>
+    <style>
+        :root {
+            --bg-game: #2c3e50;
+            --card-bg: #ecf0f1;
+            --accent: #f1c40f;
+            --can-color: #2ecc71;
+            --cant-color: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-game);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #2c3e50;
+        }
+
+        /* Giao diện máy chơi game */
+        .game-console {
+            background: #34495e;
+            padding: 20px;
+            border-radius: 40px;
+            border-bottom: 10px solid #2c3e50;
+            box-shadow: 0 20px 0 #1a252f;
+            width: 450px;
+        }
+
+        .screen {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 5px solid #bdc3c7;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .action-name {
+            font-size: 50px;
+            margin: 10px 0;
+            color: #2980b9;
+            text-transform: uppercase;
+            text-shadow: 2px 2px #bdc3c7;
+        }
+
+        .emoji-avatar {
+            font-size: 120px;
+            margin: 20px 0;
+            display: block;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .sentence-box {
+            font-size: 30px;
+            font-weight: bold;
+            height: 40px;
+            margin-bottom: 20px;
+        }
+
+        /* Nút bấm kiểu Gamepad */
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .btn-game {
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            transition: transform 0.1s;
+        }
+
+        .btn-game:active { transform: translateY(5px); }
+
+        .btn-yes { background: var(--can-color); box-shadow: 0 6px 0 #27ae60; }
+        .btn-no { background: var(--cant-color); box-shadow: 0 6px 0 #c0392b; }
+
+        .btn-nav {
+            grid-column: span 2;
+            background: var(--accent);
+            color: #2c3e50;
+            box-shadow: 0 6px 0 #f39c12;
+            margin-top: 10px;
+        }
+
+        /* Hiệu ứng đặc biệt */
+        .win-animate { transform: scale(1.2) rotate(360deg); }
+        .lose-animate { transform: translateX(20px) rotate(15deg); filter: grayscale(1); }
+    </style>
+</head>
+<body>
+
+<div class="game-console">
+    <div class="screen" id="gameScreen">
+        <div class="level-badge" id="counter">1 / 20</div>
+        <div class="action-name" id="verb">WALK</div>
+        <div class="emoji-avatar" id="avatar">🚶‍♂️</div>
+        <div class="sentence-box" id="msg">I can walk!</div>
+    </div>
+
+    <div class="controls">
+        <button class="btn-game btn-yes" onclick="playAction(true)">A: I CAN</button>
+        <button class="btn-game btn-no" onclick="playAction(false)">B: I CAN'T</button>
+        <button class="btn-game btn-nav" onclick="nextLevel()">NEXT LEVEL ▶</button>
+    </div>
+</div>
+
+<script>
+    const gameData = [
+        { v: 'Walk', e: '🚶‍♂️' }, { v: 'Run', e: '🏃‍♂️' }, { v: 'Crawl', e: '👶' },
+        { v: 'Tiptoe', e: '👣' }, { v: 'Jump', e: '🦘' }, { v: 'Leap', e: '🐬' },
+        { v: 'Hop', e: '🐰' }, { v: 'Skip', e: '💃' }, { v: 'Push', e: '🛒' },
+        { v: 'Pull', e: '🚜' }, { v: 'Kick', e: '⚽' }, { v: 'Punch', e: '🥊' },
+        { v: 'Throw', e: '⚾' }, { v: 'Catch', e: '🧤' }, { v: 'Sit', e: '🪑' },
+        { v: 'Squat', e: '🏋️‍♂️' }, { v: 'Bend', e: '🤸‍♂️' }, { v: 'Stretch', e: '🙆‍♂️' },
+        { v: 'Dive', e: '🤿' }, { v: 'Climb', e: '🧗‍♂️' }
+    ];
+
+    let current = 0;
+
+    function playAction(isCan) {
+        const avatar = document.getElementById('avatar');
+        const msg = document.getElementById('msg');
+        const verb = gameData[current].v.toLowerCase();
+
+        if (isCan) {
+            msg.innerText = `I can ${verb}! ✅`;
+            msg.style.color = "#2ecc71";
+            avatar.className = "emoji-avatar win-animate";
+        } else {
+            msg.innerText = `I can't ${verb}! ❌`;
+            msg.style.color = "#e74c3c";
+            avatar.className = "emoji-avatar lose-animate";
+        }
+    }
+
+    function nextLevel() {
+        current = (current + 1) % gameData.length;
+        const item = gameData[current];
+        
+        document.getElementById('verb').innerText = item.v;
+        document.getElementById('avatar').innerText = item.e;
+        document.getElementById('avatar').className = "emoji-avatar";
+        document.getElementById('msg').innerText = `I can ${item.v.toLowerCase()}!`;
+        document.getElementById('msg').style.color = "#2c3e50";
+        document.getElementById('counter').innerText = `${current + 1} / ${gameData.length}`;
+    }
+</script>
+
+</body>
+</html>
