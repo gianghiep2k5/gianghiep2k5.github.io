@@ -3,66 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIS Universe | Group 9</title>
+    <title>MIS NEXUS 2026 | NHÓM 9</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #020617;
             --primary: #22d3ee;
             --secondary: #a855f7;
-            --accent: #f472b6;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.15);
             --text: #f1f5f9;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg); color: var(--text); overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; }
+        body { background: var(--bg); color: var(--text); overflow-x: hidden; font-size: 1.2rem; }
 
-        /* Animation Nền */
         .bg-gradient {
             position: fixed; width: 100vw; height: 100vh;
-            background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #020617 100%);
+            background: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
             z-index: -1;
         }
 
-        .page { display: none; min-height: 100vh; padding: 60px 20px; animation: slideUp 0.6s ease-out; }
+        .page { display: none; min-height: 100vh; padding: 80px 40px; animation: slideUp 0.6s ease-out; }
         .active { display: flex; flex-direction: column; align-items: center; }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* HERO SECTION */
-        .hero-title { font-size: 7rem; font-weight: 800; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
-        .btn { padding: 16px 40px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; margin: 10px; }
-        .btn-glow { background: var(--primary); color: #000; box-shadow: 0 0 30px rgba(34, 211, 238, 0.3); }
-        .btn-outline { background: transparent; color: white; border: 1px solid var(--border); }
-        .btn:hover { transform: translateY(-5px); box-shadow: 0 10px 40px rgba(34, 211, 238, 0.5); }
+        /* HERO - FONT TO */
+        .hero-title { font-size: 8rem; font-weight: 800; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; margin-bottom: 20px; }
+        .hero-sub { font-size: 1.8rem; color: #94a3b8; max-width: 900px; text-align: center; margin-bottom: 50px; }
 
-        /* MEMBER CARDS */
-        .member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; width: 100%; max-width: 1200px; margin-top: 50px; }
-        .member-card { background: var(--glass); padding: 40px; border-radius: 30px; border: 1px solid var(--border); transition: 0.4s; cursor: pointer; text-align: center; backdrop-filter: blur(10px); }
-        .member-card:hover { border-color: var(--primary); background: rgba(255,255,255,0.07); }
-        .member-card i { font-size: 3rem; color: var(--primary); margin-bottom: 20px; }
+        /* NÚT BẤM TO */
+        .btn { padding: 20px 50px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 2px; }
+        .btn-glow { background: var(--primary); color: #000; box-shadow: 0 0 40px rgba(34, 211, 238, 0.3); }
+        .btn-outline { background: transparent; color: white; border: 2px solid var(--border); margin-left: 15px; }
+        .btn:hover { transform: translateY(-8px); box-shadow: 0 15px 50px rgba(34, 211, 238, 0.5); }
 
-        /* CAREER MAP (WOW PART) */
-        .career-map { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; width: 100%; max-width: 1200px; margin-top: 40px; }
-        .career-col { background: var(--glass); border: 1px solid var(--border); border-radius: 25px; padding: 30px; }
-        .career-col h3 { color: var(--primary); margin-bottom: 20px; font-size: 1.5rem; text-transform: uppercase; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-        .job-tag { background: rgba(168, 85, 247, 0.2); border: 1px solid var(--secondary); padding: 8px 15px; border-radius: 10px; margin-bottom: 10px; display: block; font-size: 0.9rem; font-weight: 600; transition: 0.3s; }
-        .job-tag:hover { background: var(--secondary); color: white; }
+        /* BACK BUTTONS */
+        .nav-header { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; margin-bottom: 40px; }
+        .back-btn { background: var(--glass); padding: 12px 25px; border-radius: 12px; border: 1px solid var(--border); color: var(--primary); font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
+        .back-btn:hover { background: var(--primary); color: #000; }
 
-        /* CHATBOX */
-        .chat-btn { position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; background: var(--primary); border-radius: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 40px rgba(34, 211, 238, 0.4); z-index: 100; font-size: 1.8rem; }
-        .chat-window { position: fixed; bottom: 120px; right: 30px; width: 380px; height: 550px; background: #0b0f1a; border: 1px solid var(--border); border-radius: 25px; display: none; flex-direction: column; z-index: 100; box-shadow: 0 20px 60px rgba(0,0,0,0.8); overflow: hidden; }
-        .chat-head { background: var(--primary); padding: 20px; color: #000; font-weight: 800; display: flex; justify-content: space-between; }
-        .chat-body { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
-        .msg { padding: 12px 18px; border-radius: 18px; font-size: 0.95rem; max-width: 85%; }
-        .bot { background: var(--glass); border: 1px solid var(--border); align-self: flex-start; }
-        .user { background: var(--secondary); align-self: flex-end; }
+        /* CARDS */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; width: 100%; max-width: 1300px; }
+        .card { background: var(--glass); padding: 60px 40px; border-radius: 40px; border: 1px solid var(--border); text-align: center; cursor: pointer; transition: 0.4s; backdrop-filter: blur(20px); }
+        .card:hover { border-color: var(--primary); transform: translateY(-15px); box-shadow: 0 20px 60px rgba(34, 211, 238, 0.1); }
+        .card i { font-size: 4rem; color: var(--primary); margin-bottom: 25px; }
+        .card h3 { font-size: 2.2rem; margin-bottom: 10px; }
 
-        /* UTILS */
-        .back-nav { align-self: flex-start; margin-bottom: 30px; cursor: pointer; color: var(--primary); font-weight: bold; }
+        /* DETAIL VIEW */
+        .detail-card { background: var(--glass); border: 1px solid var(--border); border-radius: 40px; padding: 60px; width: 100%; max-width: 1000px; }
+        .detail-card h4 { font-size: 2rem; color: var(--primary); margin-bottom: 15px; border-left: 5px solid var(--primary); padding-left: 20px; }
+        .detail-card p, .detail-card li { font-size: 1.4rem; color: #cbd5e1; line-height: 1.8; margin-bottom: 30px; }
+
+        /* TECH BOX */
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; width: 100%; max-width: 1300px; }
+        .tech-box { background: var(--glass); border: 2px solid var(--border); border-radius: 30px; padding: 40px; }
+        .tech-box h3 { font-size: 1.8rem; color: var(--primary); margin-bottom: 25px; }
+        .tool-tag { display: inline-block; background: rgba(168, 85, 247, 0.2); border: 1px solid var(--secondary); padding: 10px 20px; border-radius: 12px; margin: 5px; font-weight: bold; font-size: 1.1rem; }
+
+        /* QUOTE */
+        .main-quote { font-size: 2rem; font-style: italic; color: #64748b; margin-top: 80px; text-align: center; max-width: 900px; line-height: 1.5; border-top: 1px solid var(--border); padding-top: 40px; }
     </style>
 </head>
 <body>
@@ -70,105 +72,101 @@
     <div class="bg-gradient"></div>
 
     <section id="home" class="page active">
-        <p style="letter-spacing: 10px; color: var(--primary); font-weight: 600;">FUTURE MIS LEADERS</p>
-        <h1 class="hero-title">GROUP 09</h1>
-        <p style="max-width: 600px; text-align: center; color: #94a3b8; margin: 20px 0 40px;">Hệ thống thông tin quản lý - Nơi hội tụ của tư duy kinh doanh và sức mạnh công nghệ đột phá.</p>
-        <div class="btn-group">
-            <button class="btn btn-glow" onclick="showPage('members')">KHÁM PHÁ ĐỘI NGŨ</button>
-            <button class="btn btn-outline" onclick="showPage('map')">BẢN ĐỒ NGHỀ NGHIỆP MIS</button>
+        <p style="letter-spacing: 12px; color: var(--primary); font-weight: 700; font-size: 1.5rem; margin-bottom: 20px;">VNU-IS / MIS PROJECT</p>
+        <h1 class="hero-title">NHÓM 09</h1>
+        <p class="hero-sub">Hệ thống thông tin quản lý: Kiến tạo tương lai bằng dữ liệu và tư duy đột phá.</p>
+        
+        <div style="display: flex;">
+            <button class="btn btn-glow" onclick="showPage('members')">Bắt đầu <i class="fas fa-chevron-right"></i></button>
+            <button class="btn btn-outline" onclick="showPage('tools')">Công cụ hỗ trợ</button>
         </div>
+
+        <p class="main-quote">"Cách tốt nhất để dự báo tương lai là tự mình tạo ra nó."<br><span style="font-size: 1.2rem; font-style: normal; opacity: 0.6;">— Peter Drucker</span></p>
     </section>
 
     <section id="members" class="page">
-        <div style="width: 100%; max-width: 1200px;">
-            <div class="back-nav" onclick="showPage('home')"><i class="fas fa-arrow-left"></i> QUAY LẠI</div>
-            <h2 style="font-size: 3rem; font-weight: 800;">Nhân Sự Cốt Lõi</h2>
-            <div class="member-grid" id="mGrid"></div>
+        <div class="nav-header">
+            <button class="back-btn" onclick="showPage('home')"><i class="fas fa-home"></i> TRANG CHỦ</button>
+            <button class="back-btn" style="color: var(--secondary); border-color: var(--secondary);" onclick="showPage('map')">NGÀNH NGHỀ MIS <i class="fas fa-arrow-right"></i></button>
         </div>
+        <h2 style="font-size: 4rem; font-weight: 800; margin-bottom: 60px;">Database Thành Viên</h2>
+        <div class="grid" id="mGrid"></div>
     </section>
 
     <section id="details" class="page">
-        <div style="width: 100%; max-width: 800px;">
-            <div class="back-nav" onclick="showPage('members')"><i class="fas fa-arrow-left"></i> DANH SÁCH</div>
-            <h2 id="detName" style="font-size: 4rem; color: var(--primary);"></h2>
-            <p id="detRole" style="letter-spacing: 5px; color: var(--secondary); margin-bottom: 40px; font-weight: bold;"></p>
+        <div class="nav-header">
+            <button class="back-btn" onclick="showPage('members')"><i class="fas fa-arrow-left"></i> QUAY LẠI DANH SÁCH</button>
+        </div>
+        <div class="detail-card">
+            <h2 id="detName" style="font-size: 5rem; font-weight: 800; color: var(--primary); margin-bottom: 10px;"></h2>
+            <p id="detRole" style="font-size: 2rem; color: var(--secondary); font-weight: 700; margin-bottom: 50px; text-transform: uppercase; letter-spacing: 5px;"></p>
             <div id="detContent"></div>
         </div>
     </section>
 
-    <section id="map" class="page">
-        <div style="width: 100%; max-width: 1200px;">
-            <div class="back-nav" onclick="showPage('home')"><i class="fas fa-arrow-left"></i> TRANG CHỦ</div>
-            <h2 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 10px;">Toàn Cảnh Nghề Nghiệp MIS</h2>
-            <p style="color: #94a3b8; margin-bottom: 40px;">Tổng hợp các vị trí tiềm năng và bộ kỹ năng cần thiết dành riêng cho sinh viên MIS.</p>
-            
-            <div class="career-map">
-                <div class="career-col">
-                    <h3><i class="fas fa-chart-line"></i> Phân tích & Quy trình</h3>
-                    <div class="job-tag">Business Analyst (BA)</div>
-                    <div class="job-tag">Product Manager (PM)</div>
-                    <div class="job-tag">ERP Consultant</div>
-                    <div class="job-tag">IT Project Manager</div>
-                    <p style="font-size: 0.8rem; color: #64748b; margin-top: 20px;">Kỹ năng: Khơi gợi yêu cầu, BPMN, Agile/Scrum, Tư duy hệ thống.</p>
-                </div>
-                <div class="career-col">
-                    <h3><i class="fas fa-database"></i> Dữ liệu & Chiến lược</h3>
-                    <div class="job-tag">Data Analyst (DA)</div>
-                    <div class="job-tag">Business Intelligence (BI)</div>
-                    <div class="job-tag">Data Scientist</div>
-                    <div class="job-tag">IT Auditor</div>
-                    <p style="font-size: 0.8rem; color: #64748b; margin-top: 20px;">Kỹ năng: SQL, Python, Power BI/Tableau, Thống kê, Big Data.</p>
-                </div>
-                <div class="career-col">
-                    <h3><i class="fas fa-code"></i> Kỹ thuật & Hạ tầng</h3>
-                    <div class="job-tag">Full-stack Developer</div>
-                    <div class="job-tag">Database Administrator</div>
-                    <div class="job-tag">Security Analyst</div>
-                    <div class="job-tag">System Architect</div>
-                    <p style="font-size: 0.8rem; color: #64748b; margin-top: 20px;">Kỹ năng: Node.js/React, Cloud (AWS/Azure), Security, Docker.</p>
-                </div>
+    <section id="tools" class="page">
+        <div class="nav-header">
+            <button class="back-btn" onclick="showPage('home')"><i class="fas fa-home"></i> TRANG CHỦ</button>
+        </div>
+        <h2 style="font-size: 4rem; font-weight: 800; margin-bottom: 60px;">Hệ Sinh Thái Công Cụ</h2>
+        <div class="tech-grid">
+            <div class="tech-box">
+                <h3><i class="fas fa-robot"></i> Artificial Intelligence</h3>
+                <div class="tool-tag">ChatGPT</div> <div class="tool-tag">Gemini</div> <div class="tool-tag">Midjourney</div> <div class="tool-tag">Notion AI</div>
             </div>
-
-            <div style="margin-top: 40px; background: var(--glass); padding: 40px; border-radius: 25px; border: 1px solid var(--border);">
-                <h3 style="color: var(--accent); margin-bottom: 20px;">Bộ Kỹ Năng Mềm Giao Thoa (The Bridge Skills)</h3>
-                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <span style="border: 1px solid var(--accent); padding: 10px 20px; border-radius: 50px;">AI-Augmentation (Sử dụng AI tối ưu hóa hiệu suất)</span>
-                    <span style="border: 1px solid var(--accent); padding: 10px 20px; border-radius: 50px;">Communication (Dịch thuật Kỹ thuật - Kinh doanh)</span>
-                    <span style="border: 1px solid var(--accent); padding: 10px 20px; border-radius: 50px;">Design Thinking & Empathy</span>
-                </div>
+            <div class="tech-box">
+                <h3><i class="fas fa-database"></i> Data & Analytics</h3>
+                <div class="tool-tag">SQL Server</div> <div class="tool-tag">Python</div> <div class="tool-tag">Power BI</div> <div class="tool-tag">Tableau</div>
+            </div>
+            <div class="tech-box">
+                <h3><i class="fas fa-laptop-code"></i> Development</h3>
+                <div class="tool-tag">React.js</div> <div class="tool-tag">Node.js</div> <div class="tool-tag">Docker</div> <div class="tool-tag">AWS</div>
+            </div>
+            <div class="tech-box">
+                <h3><i class="fas fa-tasks"></i> Management</h3>
+                <div class="tool-tag">Jira</div> <div class="tool-tag">Trello</div> <div class="tool-tag">Figma</div> <div class="tool-tag">Asana</div>
             </div>
         </div>
     </section>
 
-    <div class="chat-window" id="chatWin">
-        <div class="chat-head"><span>MIS GENIUS AI</span><i class="fas fa-times" onclick="toggleChat()" style="cursor:pointer"></i></div>
-        <div class="chat-body" id="chatB">
-            <div class="msg bot">Chào bạn! Tôi là trợ lý Nhóm 9. Bạn muốn tìm hiểu về thành viên nào hay lộ trình nghề nghiệp nào?</div>
+    <section id="map" class="page">
+        <div class="nav-header">
+            <button class="back-btn" onclick="showPage('home')"><i class="fas fa-home"></i> TRANG CHỦ</button>
         </div>
-        <div style="padding: 15px; display: flex; gap: 10px; border-top: 1px solid var(--border);">
-            <input type="text" id="chatIn" placeholder="Hỏi về Lan, Hiệp, Tài..." style="flex:1; background:transparent; border:1px solid var(--border); color:white; padding: 10px; border-radius: 10px;">
-            <button onclick="send()" style="background:var(--primary); border:none; padding:10px 15px; border-radius:10px; cursor:pointer;"><i class="fas fa-paper-plane"></i></button>
+        <h2 style="font-size: 4rem; font-weight: 800; margin-bottom: 60px;">Bản Đồ Nghề Nghiệp MIS</h2>
+        <div class="tech-grid">
+            <div class="tech-box" style="border-color: var(--primary);">
+                <h3>Nghiệp vụ & Quy trình</h3>
+                <p>• Business Analyst (BA)<br>• Product Manager (PM)<br>• ERP Consultant</p>
+            </div>
+            <div class="tech-box" style="border-color: var(--secondary);">
+                <h3>Dữ liệu & Chiến lược</h3>
+                <p>• Data Analyst (DA)<br>• BI Developer<br>• Data Scientist</p>
+            </div>
+            <div class="tech-box" style="border-color: var(--accent);">
+                <h3>Kỹ thuật & Hạ tầng</h3>
+                <p>• Full-stack Developer<br>• System Architect<br>• IT Security</p>
+            </div>
         </div>
-    </div>
-    <div class="chat-btn" onclick="toggleChat()"><i class="fas fa-comment-dots" style="color:#000"></i></div>
+    </section>
 
     <script>
         const members = [
-            { name: "Lê Hoàng Lan", role: "Business Analyst", q1: "Business Analyst chuyên nghiệp.", q2: "SQL, Power BI, Jira, AI Tools.", q3: "Elicitation, Critical Thinking." },
-            { name: "Giang Lê Hiệp", role: "Full-stack Developer", q1: "Xây dựng hệ thống toàn diện.", q2: "React, Node.js, Docker, AWS.", q3: "System Architecture, Agile." },
-            { name: "Đinh Tấn Tài", role: "Data Analyst", q1: "Chuyên gia dữ liệu chiến lược.", q2: "Python, SQL, Tableau, Excel.", q3: "Statistical Analysis, Data Storytelling." },
-            { name: "Lục Xuân Huy", role: "Product Manager", q1: "Quản lý sản phẩm đột phá.", q2: "Mixpanel, Figma, Notion AI.", q3: "Product Thinking, UX Research." },
-            { name: "Trần Anh Minh", role: "Designer", q1: "Thiết kế trải nghiệm tối ưu.", q2: "Adobe Suite, Figma, Midjourney.", q3: "Design Thinking, Empathy." }
+            { name: "Lê Hoàng Lan", role: "Business Analyst", q1: "Business Analyst chuyên nghiệp - cầu nối giữa Kinh doanh và Kỹ thuật.", q2: "SQL, Power BI, Jira, AI Tools (Gemini, ChatGPT).", q3: "Kỹ năng khơi gợi yêu cầu, Tư duy phản biện, Đàm phán." },
+            { name: "Giang Lê Hiệp", role: "Full-stack Developer", q1: "Phát triển hệ thống phần mềm toàn diện có khả năng mở rộng cao.", q2: "React, Node.js, Docker, Kubernetes, AWS.", q3: "Kiến trúc hệ thống, Quản lý dự án Agile/Scrum." },
+            { name: "Đinh Tấn Tài", role: "Data Analyst", q1: "Phù thủy dữ liệu - Chuyển hóa con số thành giá trị chiến lược.", q2: "Python, SQL, Tableau, Google Analytics, Excel VBA.", q3: "Thống kê toán học, Data Storytelling, Nhạy bén kinh doanh." },
+            { name: "Lục Xuân Huy", role: "Product Manager", q1: "Định hướng tầm nhìn sản phẩm, thấu hiểu người dùng tối đa.", q2: "Figma, Notion AI, Mixpanel, Hotjar, Jira.", q3: "Product Thinking, UX Research, Điều phối liên phòng ban." },
+            { name: "Trần Anh Minh", role: "Designer", q1: "Kiến tạo trải nghiệm thị giác ấn tượng và thấu cảm người dùng.", q2: "Adobe Creative Cloud, Figma, Midjourney, DALL-E.", q3: "Design Thinking, Tâm lý học màu sắc, Empathy." }
         ];
 
         function init() {
             const grid = document.getElementById('mGrid');
             members.forEach((m, i) => {
                 grid.innerHTML += `
-                    <div class="member-card" onclick="showDetail(${i})">
-                        <i class="fas fa-user-shield"></i>
+                    <div class="card" onclick="showDetail(${i})">
+                        <i class="fas fa-user-astronaut"></i>
                         <h3>${m.name}</h3>
-                        <p style="color:var(--primary); font-weight:bold; margin-top:5px;">${m.role}</p>
+                        <p style="color:var(--primary); font-weight:bold; letter-spacing:2px;">${m.role}</p>
                     </div>
                 `;
             });
@@ -176,7 +174,8 @@
 
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            const target = document.getElementById(id);
+            target.classList.add('active');
             window.scrollTo(0,0);
         }
 
@@ -185,36 +184,14 @@
             document.getElementById('detName').innerText = m.name;
             document.getElementById('detRole').innerText = m.role;
             document.getElementById('detContent').innerHTML = `
-                <div style="background:var(--glass); padding:30px; border-radius:20px; border:1px solid var(--border);">
-                    <h4 style="color:var(--primary); margin-bottom:10px;">Q1: CÔNG VIỆC MƠ ƯỚC</h4><p style="margin-bottom:30px;">${m.q1}</p>
-                    <h4 style="color:var(--primary); margin-bottom:10px;">Q2: CÔNG NGHỆ HỖ TRỢ</h4><p style="margin-bottom:30px;">${m.q2}</p>
-                    <h4 style="color:var(--primary); margin-bottom:10px;">Q3: KỸ NĂNG CẦN PHÁT TRIỂN</h4><p>${m.q3}</p>
-                </div>
+                <h4>Q1: CÔNG VIỆC MƠ ƯỚC</h4>
+                <p>${m.q1}</p>
+                <h4>Q2: CÔNG NGHỆ HỖ TRỢ</h4>
+                <p>${m.q2}</p>
+                <h4>Q3: KỸ NĂNG CẦN PHÁT TRIỂN</h4>
+                <p>${m.q3}</p>
             `;
             showPage('details');
-        }
-
-        function toggleChat() {
-            const win = document.getElementById('chatWin');
-            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        function send() {
-            const inp = document.getElementById('chatIn');
-            const b = document.getElementById('chatB');
-            if(!inp.value) return;
-            b.innerHTML += `<div class="msg user">${inp.value}</div>`;
-            const v = inp.value.toLowerCase();
-            let r = "Đang truy xuất database... Bạn muốn hỏi về Lan, Hiệp, Tài, Huy, Minh hay các ngành nghề MIS?";
-            if(v.includes("lan")) r = "Lê Hoàng Lan định hướng BA, mạnh về phân tích quy trình nghiệp vụ.";
-            if(v.includes("hiệp")) r = "Giang Lê Hiệp là Full-stack Dev, chuyên gia về kiến trúc hệ thống.";
-            if(v.includes("nghề")) r = "MIS có 3 nhóm chính: Phân tích (BA/PM), Dữ liệu (DA/BI) và Kỹ thuật (Dev/Architect).";
-            
-            setTimeout(() => {
-                b.innerHTML += `<div class="msg bot">${r}</div>`;
-                b.scrollTop = b.scrollHeight;
-            }, 600);
-            inp.value = "";
         }
 
         init();
