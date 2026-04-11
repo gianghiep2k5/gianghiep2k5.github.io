@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group 9 | Future Careers</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #38bdf8;
+            --text-main: #f8fafc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body { 
+            background: var(--bg); 
+            color: var(--text-main); 
+            overflow-x: hidden; 
+            min-height: 100vh;
+        }
+
+        /* Background Animation */
+        .bg-blob {
+            position: fixed;
+            width: 500px; height: 500px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.15;
+            animation: move 20s infinite alternate;
+        }
+
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(50%, 50%); }
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            transition: 0.5s all ease;
+        }
+
+        .active { display: flex; flex-direction: column; align-items: center; justify-content: center; animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* HOME PAGE */
+        .home-card {
+            text-align: center;
+            padding: 60px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: 0.4s;
+        }
+
+        .home-card:hover { transform: scale(1.02); border-color: var(--accent); }
+        
+        .home-card h1 { font-size: 5rem; font-weight: 800; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .home-card p { font-size: 1.2rem; letter-spacing: 4px; text-transform: uppercase; margin-top: 10px; color: #94a3b8; }
+
+        /* MEMBER LIST PAGE */
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 40px;
+        }
+
+        .member-item {
+            background: var(--glass);
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            transition: 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .member-item:hover { background: rgba(255,255,255,0.1); transform: translateY(-10px); }
+        .member-item i { font-size: 2.5rem; color: var(--accent); margin-bottom: 15px; }
+        .member-item h3 { font-size: 1.5rem; margin-bottom: 5px; }
+        .member-item span { color: #38bdf8; font-size: 0.9rem; font-weight: bold; text-transform: uppercase; }
+
+        /* QA PAGE */
+        .qa-container { width: 100%; max-width: 900px; margin-top: 30px; }
+        .qa-box {
+            background: var(--glass);
+            border-radius: 20px;
+            margin-bottom: 15px;
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+        }
+
+        .qa-header {
+            padding: 20px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.03);
+            font-weight: 600;
+        }
+
+        .qa-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.4s ease-out;
+            padding: 0 30px;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .qa-body.open { padding: 20px 30px; max-height: 1000px; }
+
+        .back-link { cursor: pointer; color: var(--accent); margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; }
+
+        .section-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; }
+
+        ul { list-style: none; }
+        li::before { content: "▹ "; color: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <div class="bg-blob"></div>
+
+    <section id="home" class="page active">
+        <div class="home-card" onclick="showPage('members')">
+            <p>Welcome to</p>
+            <h1>NHÓM 9</h1>
+            <p style="letter-spacing: 1px; text-transform: none; color: #64748b;">Nghề nghiệp tương lai của bạn là gì?</p>
+            <div style="margin-top: 30px; color: var(--accent); font-size: 2rem;">
+                <i class="fas fa-chevron-circle-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <section id="members" class="page">
+        <h2 class="section-title">Đội ngũ tài năng</h2>
+        <div class="member-grid" id="memberGrid"></div>
+    </section>
+
+    <section id="details" class="page">
+        <div class="qa-container">
+            <div class="back-link" onclick="showPage('members')"><i class="fas fa-arrow-left"></i> Quay lại danh sách</div>
+            <h2 id="mName" style="font-size: 3rem; margin-bottom: 5px;"></h2>
+            <p id="mRole" style="color: var(--accent); font-weight: bold; margin-bottom: 40px;"></p>
+            <div id="qaList"></div>
+        </div>
+    </section>
+
+    <script>
+        const membersData = [
+            {
+                name: "Lê Hoàng Lan",
+                role: "Business Analyst",
+                q1: "Trở thành cầu nối giữa kinh doanh và kỹ thuật, tối ưu hóa quy trình nghiệp vụ thông qua hệ thống thông tin.",
+                q2: "<ul><li><b>AI:</b> ChatGPT, Gemini để tóm tắt tài liệu, gợi ý kịch bản test.</li><li><b>Data Analytics:</b> SQL, Power BI, Tableau để đưa ra quyết định dựa trên số liệu.</li><li><b>Cloud & Low-code:</b> AWS, Azure, Figma, Jira/Confluence.</li></ul>",
+                q3: "<ul><li>Kỹ năng Khơi gợi và Phân tích (Elicitation & Analysis).</li><li>Kỹ năng Giao tiếp & Đàm phán với Stakeholders.</li><li>Tư duy Phản biện (Critical Thinking).</li></ul>"
+            },
+            {
+                name: "Giang Lê Hiệp",
+                role: "Full-stack Developer",
+                q1: "Xây dựng các giải pháp phần mềm toàn diện, làm chủ cả Frontend và Backend để tạo ra sản phẩm hoàn chỉnh.",
+                q2: "<ul><li><b>Frontend:</b> React.js, Next.js, Vue.js.</li><li><b>Backend:</b> Node.js, Spring Boot, Python.</li><li><b>Database:</b> SQL Server, PostgreSQL, MongoDB.</li><li><b>DevOps:</b> Docker, Kubernetes, AWS/Azure.</li></ul>",
+                q3: "<ul><li>Thiết kế kiến trúc hệ thống bền vững.</li><li>Tư duy phân tích nghiệp vụ (BA) trong phát triển phần mềm.</li><li>Kỹ năng quản lý dự án Agile/Scrum.</li></ul>"
+            },
+            {
+                name: "Đinh Tấn Tài",
+                role: "Data Analyst",
+                q1: "Chuyển hóa dữ liệu thô thành thông tin có giá trị để hỗ trợ doanh nghiệp ra quyết định chiến lược.",
+                q2: "<ul><li><b>Query:</b> SQL (MySQL, PostgreSQL).</li><li><b>Visualization:</b> Power BI, Tableau, Looker Studio.</li><li><b>Programming:</b> Python (Pandas, NumPy, Matplotlib), R.</li><li><b>Tools:</b> Excel nâng cao (VBA, Power Query).</li></ul>",
+                q3: "<ul><li>Làm sạch & Chuẩn hóa dữ liệu (Data Cleaning).</li><li>Phân tích thống kê & Toán học.</li><li>Kể chuyện qua dữ liệu (Data Storytelling).</li></ul>"
+            },
+            {
+                name: "Lục Xuân Huy",
+                role: "Product Manager",
+                q1: "Chịu trách nhiệm về sự thành công của sản phẩm, từ tầm nhìn đến thực thi và đo lường hiệu quả.",
+                q2: "<ul><li><b>AI:</b> ChatGPT, Notion AI để viết PRD, User Story.</li><li><b>Analytics:</b> Google Analytics, Mixpanel để theo dõi hành vi user.</li><li><b>Design:</b> Figma, Canva để vẽ Wireframe/Prototype.</li><li><b>Management:</b> Jira, Trello, Asana.</li></ul>",
+                q3: "<ul><li>Tư duy sản phẩm (Product Thinking) & Tư duy dữ liệu.</li><li>Thấu hiểu trải nghiệm người dùng (UX Thinking).</li><li>Khả năng làm việc hiệu quả với đội ngũ Dev và Kinh doanh.</li></ul>"
+            },
+            {
+                name: "Trần Anh Minh",
+                role: "Designer",
+                q1: "Tạo ra những trải nghiệm thị giác ấn tượng và giao diện người dùng tối ưu, cân bằng giữa thẩm mỹ và tính năng.",
+                q2: "<ul><li><b>Creative:</b> Midjourney, Dalle-3 để lên ý tưởng.</li><li><b>Design Tools:</b> Adobe Creative Cloud, Figma.</li><li><b>Analysis:</b> Hotjar (Bản đồ nhiệt), Google Analytics.</li><li><b>Code:</b> HTML/CSS cơ bản để làm việc với Dev.</li></ul>",
+                q3: "<ul><li>Sử dụng thành thạo Figma, Photoshop, Illustrator.</li><li>Tư duy thiết kế (Design Thinking) & Tâm lý học màu sắc.</li><li>Kỹ năng thấu cảm (Empathy) với người dùng.</li></ul>"
+            }
+        ];
+
+        function init() {
+            const grid = document.getElementById('memberGrid');
+            membersData.forEach((m, i) => {
+                grid.innerHTML += `
+                    <div class="member-item" onclick="showDetails(${i})">
+                        <i class="fas fa-id-badge"></i>
+                        <h3>${m.name}</h3>
+                        <span>${m.role}</span>
+                    </div>
+                `;
+            });
+        }
+
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function showDetails(index) {
+            const m = membersData[index];
+            document.getElementById('mName').innerText = m.name;
+            document.getElementById('mRole').innerText = m.role;
+            
+            const qaList = document.getElementById('qaList');
+            const questions = [
+                {q: "Công việc mơ ước của bạn là gì?", a: m.q1},
+                {q: "Công nghệ nào hỗ trợ công việc đó?", a: m.q2},
+                {q: "Kỹ năng cần phát triển?", a: m.q3}
+            ];
+
+            qaList.innerHTML = questions.map((item, i) => `
+                <div class="qa-box">
+                    <div class="qa-header" onclick="toggleQA(this)">
+                        <span>Q${i+1}: ${item.q}</span>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="qa-body">${item.a}</div>
+                </div>
+            `).join('');
+            
+            showPage('details');
+        }
+
+        function toggleQA(el) {
+            const body = el.nextElementSibling;
+            const icon = el.querySelector('i');
+            body.classList.toggle('open');
+            icon.classList.toggle('fa-plus');
+            icon.classList.toggle('fa-minus');
+        }
+
+        init();
+    </script>
+</body>
+</html>
