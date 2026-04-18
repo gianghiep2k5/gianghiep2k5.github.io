@@ -48,12 +48,11 @@
         .hero-content p{font-size:1.3vw;font-weight:700;letter-spacing:6px;margin-bottom:10px;color:var(--a)}
         .mosaic-container{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(12,1fr);gap:10px;width:100%;height:100%;opacity:.8}
         .mosaic-item{overflow:hidden;background:#f0f0f0}
-        .mosaic-item img{width:100%;height:100%;object-fit:cover;filter:grayscale(30%);transition:1s ease}
+        .mosaic-item img{width:100%;height:100%;object-fit:cover;transition:1s}
         .img-1{grid-area:1/1/9/5} .img-2{grid-area:2/5/7/8} .img-3{grid-area:1/8/6/13} .img-4{grid-area:7/5/12/9} .img-5{grid-area:6/9/13/13} .img-6{grid-area:9/1/13/5}
-        .special-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;padding:100px 8%;background:#000;color:#fff;align-items:center}
-        .secret-mosaic-container{position:relative;height:500px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px;border:1px solid rgba(255,215,0,.3)}
-        .secret-mosaic-container img{width:100%;height:100%;object-fit:cover;filter:blur(15px) grayscale(1);opacity:.5;transition:.8s}
-        .secret-mosaic-container:hover img{filter:blur(2px) grayscale(0);opacity:.8}
+        .special-grid{display:flex;flex-direction:column;gap:40px;padding:100px 8%;background:#000;color:#fff}
+        .secret-mosaic-container{position:relative;height:600px;display:flex;justify-content:center;align-items:center;border:1px solid rgba(255,215,0,.3)}
+        .secret-mosaic-container img{width:100%;height:100%;object-fit:cover;filter:none;opacity:1}
         .quantity-selector{display:flex;align-items:center;border:1.5px solid var(--g)}
         .quantity-selector button{background:none;border:none;color:var(--g);padding:10px 15px;cursor:pointer;font-size:18px;font-weight:900}
         .quantity-selector input{width:45px;text-align:center;background:none;border:none;color:#fff;font-weight:700;font-size:16px;border-inline:1px solid rgba(255,215,0,.3)}
@@ -63,7 +62,7 @@
         .season-tag{font-size:12px;font-weight:700;color:var(--a);letter-spacing:2px;text-transform:uppercase;margin-bottom:40px;display:block}
         .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:40px}
         .product-box{display:flex;flex-direction:column;position:relative}
-        .slide-wrapper{position:relative;width:100%;padding-top:130%;background:#f7f7f7;overflow:hidden;margin-bottom:15px}
+        .slide-wrapper{position:relative;width:100%;height:400px;background:#f7f7f7;overflow:hidden;margin-bottom:15px}
         .slide{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
         .slide.active{display:flex}
         .slide img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
@@ -147,10 +146,8 @@
 
     <section class="special-grid" id="secret">
         <div class="secret-mosaic-container">
-            <div><img src="https://images.unsplash.com/photo-1556316384-12c3dd30f515?auto=format&fit=crop&w=500&q=80"></div>
-            <div><img src="https://images.unsplash.com/photo-1606925797300-0b35e9d1741e?auto=format&fit=crop&w=500&q=80"></div>
-            <div><img src="https://images.unsplash.com/photo-1510566337590-2fc1f21d0faa?auto=format&fit=crop&w=500&q=80"></div>
-        </div>
+            <img src="https://images.unsplash.com/photo-1556316384-12c3dd30f515?auto=format&fit=crop&w=500&q=80" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22500%22%20height%3D%22600%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Crect%20width%3D%22500%22%20height%3D%22600%22%20fill%3D%22%23f7f7f7%22/%3E%3Ctext%20x%3D%22250%22%20y%3D%22300%22%20font-size%3D%2240%22%20fill%3D%22%23000%22%20text-anchor%3D%22middle%22%3ESecret%20Jersey%3C/text%3E%3C/svg%3E'">
+        </img>
         <div>
             <h2 style="color:var(--g);font-size:3em">SECRET ITEMS</h2>
             <p style="color:#aaa;margin-bottom:10px">Receive a random authentic jersey from top European leagues.</p>
@@ -179,26 +176,16 @@
     <script>
         const sizes = ["XS", "S", "M", "L", "XL", "2XL"], MAX = 10;
         const raw = [
-            {id:1, name:"MU 1999 Home", price:2500000, img:"https://images.unsplash.com/photo-1599619351208-3e6c839d6828?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
-            {id:2, name:"Real 2002 Home", price:3000000, img:"https://images.unsplash.com/photo-1620051139886-905167664670?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
-            {id:3, name:"Brazil 2002 Home", price:1750000, img:"https://images.unsplash.com/photo-1553106918-51318041604c?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
-            {id:4, name:"AC Milan 2007", price:2100000, img:"https://images.unsplash.com/photo-1511886929837-354d827aae26?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
-            {id:5, name:"Germany 1990", price:2850000, img:"https://images.unsplash.com/photo-1560272564-c83b66b1ad12?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
-            {id:6, name:"Arsenal 2004", price:2400000, img:"https://images.unsplash.com/photo-1622165232447-574678216d5a?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
-            {id:7, name:"Argentina 1986", price:2950000, img:"https://images.unsplash.com/photo-1575361204480-aadea25e6e68?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
-            {id:8, name:"Barca 2009 Home", price:1950000, img:"https://images.unsplash.com/photo-1520113112170-4420ee93933c?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
-            {id:9, name:"France 1998", price:2250000, img:"https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
-            {id:10, name:"Liverpool 2005", price:1800000, img:"https://images.unsplash.com/photo-1518091043644-c1d445ba67a0?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
-            {id:11, name:"Tottenham 2010", price:1650000, img:"https://images.unsplash.com/photo-1543351611-58f69d7c1781?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
-            {id:12, name:"Dortmund 2012", price:1550000, img:"https://images.unsplash.com/photo-1616606103915-cbc747833015?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
-            {id:13, name:"Chelsea 2012", price:1700000, img:"https://images.unsplash.com/photo-1524015348248-266567389143?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
-            {id:14, name:"Real 2011 Home", price:1850000, img:"https://images.unsplash.com/photo-1510051646601-9d512665764d?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
-            {id:15, name:"Juventus 2012", price:1600000, img:"https://images.unsplash.com/photo-1519861155730-0b5fbf0dd889?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
-            {id:16, name:"Inter 2010 Away", price:1750000, img:"https://images.unsplash.com/photo-1522778509133-f1e576c1f3d5?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
-            {id:17, name:"Ajax 2010 Home", price:1450000, img:"https://images.unsplash.com/photo-1606925797300-0b35e9d1741e?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
-            {id:18, name:"Germany 2013", price:1900000, img:"https://images.unsplash.com/photo-1551280857-2b9bbe52cf5a?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
-            {id:19, name:"Netherlands 2012", price:1800000, img:"https://images.unsplash.com/photo-1559160581-447545934149?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
-            {id:20, name:"Argentina WC 22", price:3500000, img:"https://images.unsplash.com/photo-1671537237096-7248316dfa9c?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"}
+            {id:1, name:"MU 1999 Home", price:2500000, img:"https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80", s:"Winter"},
+            {id:2, name:"Real 2002 Home", price:3000000, img:"https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?auto=format&fit=crop&w=1200&q=80", s:"Summer"},
+            {id:3, name:"Brazil 2002 Home", price:1750000, img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80", s:"Summer"},
+            {id:4, name:"AC Milan 2007", price:2100000, img:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=80", s:"Summer"},
+            {id:5, name:"Germany 1990", price:2850000, img:"https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=1200&q=80", s:"Winter"},
+            {id:6, name:"Arsenal 2004", price:2400000, img:"https://images.unsplash.com/photo-1622165232447-574678216d5a?auto=format&fit=crop&w=1200&q=80", s:"Summer"},
+            {id:7, name:"Argentina 1986", price:2950000, img:"https://images.unsplash.com/photo-1575361204480-aadea25e6e68?auto=format&fit=crop&w=1200&q=80", s:"Summer"},
+            {id:8, name:"Barca 2009 Home", price:1950000, img:"https://images.unsplash.com/photo-1520113112170-4420ee93933c?auto=format&fit=crop&w=1200&q=80", s:"Summer"},
+            {id:9, name:"France 1998", price:2250000, img:"https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1200&q=80", s:"Summer"},
+            {id:10, name:"Liverpool 2005", price:1800000, img:"https://images.unsplash.com/photo-1518091043644-c1d445ba67a0?auto=format&fit=crop&w=1200&q=80", s:"Summer"}
         ];
 
         let view = 'All', search = "", stock = {}, cart = JSON.parse(localStorage.getItem('RG_Cart'))||[];
@@ -278,7 +265,7 @@
                     let s = getS(p.id, sz);
                     return `<button class="size-btn ${s===0?'sold-out':s<=3?'low-stock':''}" onclick="selSize(this,${p.id})" data-size="${sz}" ${s===0?'disabled':''}>${sz}<span class="stock-dot">${s===0?'Out':s<=3?s+' left':''}</span></button>`;
                 }).join('');
-                return `<div class="product-box"><div class="slide-wrapper"><img src="${p.img}" style="width:100%;height:100%;object-fit:cover;position:absolute"></div><div class="p-name">${p.name}</div><div class="p-price">${p.price.toLocaleString()} VND</div><div class="scarcity-bar"><div class="scarcity-text">🔥 ${pct}% SOLD</div><div class="scarcity-track"><div class="scarcity-fill" style="width:${pct}%"></div></div></div><div class="size-selector" id="sizes-${p.id}">${btns}</div><button class="btn-add-cart" id="btn-${p.id}" onclick="addCart(${p.id})" disabled>Select Size</button></div>`;
+                return `<div class="product-box"><div class="slide-wrapper"><img src="${p.img}" style="width:100%;height:100%;object-fit:cover;" alt="${p.name}" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%221200%22%20height%3D%221500%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Crect%20width%3D%221200%22%20height%3D%221500%22%20fill%3D%22%23f7f7f7%22/%3E%3Ctext%20x%3D%22600%22%20y%3D%22750%22%20font-size%3D%2240%22%20fill%3D%22%23000%22%20text-anchor%3D%22middle%22%3EJersey%20Image%3C/text%3E%3C/svg%3E'"></div><div class="p-name">${p.name}</div><div class="p-price">${p.price.toLocaleString()} VND</div><div class="scarcity-bar"><div class="scarcity-text">🔥 ${pct}% SOLD</div><div class="scarcity-track"><div class="scarcity-fill" style="width:${pct}%"></div></div></div><div class="size-selector" id="sizes-${p.id}">${btns}</div><button class="btn-add-cart" id="btn-${p.id}" onclick="addCart(${p.id})" disabled>Select Size</button></div>`;
             }).join('') || `<p style="grid-column:1/-1;text-align:center;color:#888">No items found.</p>`;
         }
         window.onload = render;
