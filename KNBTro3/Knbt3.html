@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroGrail Store | The Immortal Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root{--p:#000;--a:#c00;--g:#ffd700;--w:#fff;--bg:#f7f7f7;--t:#1a1a1a}
+        *{box-sizing:border-box;margin:0;padding:0;scroll-behavior:smooth}
+        body{font-family:'Inter',sans-serif;background:var(--w);color:var(--t);line-height:1.5;overflow-x:hidden}
+        h1,h2,h3,.logo{font-family:'Montserrat',sans-serif;text-transform:uppercase}
+        #global-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1500;backdrop-filter:blur(3px)}
+        .top-announcement{background:var(--p);height:40px;display:flex;align-items:center;overflow:hidden;z-index:1100;position:relative}
+        .announcement-track{display:flex;animation:ticker 35s linear infinite;white-space:nowrap}
+        .announcement-track:hover{animation-play-state:paused}
+        @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .ann-segment{display:inline-flex;align-items:center;padding:0 10px}
+        .ann-main{font:900 11px 'Montserrat';letter-spacing:3px;color:var(--g);text-transform:uppercase;padding:0 18px}
+        .ann-slogan{font:italic 400 11px 'Inter';color:rgba(255,255,255,.7);padding:0 18px}
+        .ann-dot{color:var(--g);font-size:16px;padding:0 6px}
+        .ann-flash{font:900 10px 'Montserrat';letter-spacing:2px;background:var(--a);color:#fff;padding:3px 10px;margin:0 18px;text-transform:uppercase}
+        .header{display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:60px;border-bottom:1px solid #eee;position:sticky;top:0;background:rgba(255,255,255,.98);backdrop-filter:blur(10px);z-index:1000}
+        .logo{font-size:20px;font-weight:900;letter-spacing:-1px;text-decoration:none;color:#000}
+        .nav-links a{text-decoration:none;color:#000;margin:0 20px;font-weight:600;font-size:12px;letter-spacing:1px;transition:.3s}
+        .nav-links a:hover{color:var(--a)}
+        .header-right{display:flex;align-items:center;gap:15px;position:relative}
+        .header-icon{cursor:pointer;font-size:18px;transition:.2s}
+        .header-icon:hover{color:var(--a)}
+        .cart-icon-container{cursor:pointer;position:relative;font-size:18px}
+        .cart-count{background:var(--a);color:#fff;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;position:absolute;top:-8px;right:-8px}
+        .popup{display:none;position:fixed;background:#fff;z-index:2000;box-shadow:0 25px 50px rgba(0,0,0,.3)}
+        #search-bar-container{right:120px;top:50%;transform:translateY(-50%);width:300px;padding:5px 10px;border-bottom:1px solid #000;z-index:1600;animation:fadeIn .3s ease;background:rgba(255,255,255,.95);position:absolute;box-shadow:none}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(-50%) translateX(10px)}to{opacity:1;transform:translateY(-50%) translateX(0)}}
+        #search-input{flex:1;padding:8px;font-size:13px;border:none;background:transparent;outline:none;width:90%}
+        #user-modal{top:50%;left:50%;transform:translate(-50%,-50%);width:400px;padding:40px;text-align:center}
+        #cart-modal{top:0;right:0;width:420px;height:100%;padding:40px;flex-direction:column;animation:slideIn .4s ease}
+        @keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+        #season-menu{top:60px;right:5%;border:1px solid #000;flex-direction:column;padding:10px;width:240px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+        #season-menu button{background:none;border:none;padding:12px;text-align:left;font-weight:600;cursor:pointer;text-transform:uppercase;font-size:11px;letter-spacing:1px}
+        #season-menu button:hover{color:var(--a)}
+        .login-field,.btn-login-submit,.google-btn{width:100%;padding:12px;margin-bottom:15px;border:1px solid #ddd;outline:none}
+        .btn-login-submit{background:#000;color:#fff;border:none;font-weight:700;cursor:pointer}
+        .google-btn{display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;font-size:14px}
+        .hero-banner{position:relative;height:85vh;display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:2px solid #000}
+        .hero-content{position:absolute;z-index:10;text-align:center;width:100%;pointer-events:none}
+        .hero-content h1{font-size:10vw;line-height:.85;margin:0;font-weight:900;letter-spacing:-8px;color:#000}
+        .hero-content p{font-size:1.3vw;font-weight:700;letter-spacing:6px;margin-bottom:10px;color:var(--a)}
+        .mosaic-container{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(12,1fr);gap:10px;width:100%;height:100%;opacity:.8}
+        .mosaic-item{overflow:hidden;background:#f0f0f0}
+        .mosaic-item img{width:100%;height:100%;object-fit:cover;filter:grayscale(30%);transition:1s ease}
+        .img-1{grid-area:1/1/9/5} .img-2{grid-area:2/5/7/8} .img-3{grid-area:1/8/6/13} .img-4{grid-area:7/5/12/9} .img-5{grid-area:6/9/13/13} .img-6{grid-area:9/1/13/5}
+        .special-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;padding:100px 8%;background:#000;color:#fff;align-items:center}
+        .secret-mosaic-container{position:relative;height:500px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px;border:1px solid rgba(255,215,0,.3)}
+        .secret-mosaic-container img{width:100%;height:100%;object-fit:cover;filter:blur(15px) grayscale(1);opacity:.5;transition:.8s}
+        .secret-mosaic-container:hover img{filter:blur(2px) grayscale(0);opacity:.8}
+        .quantity-selector{display:flex;align-items:center;border:1.5px solid var(--g)}
+        .quantity-selector button{background:none;border:none;color:var(--g);padding:10px 15px;cursor:pointer;font-size:18px;font-weight:900}
+        .quantity-selector input{width:45px;text-align:center;background:none;border:none;color:#fff;font-weight:700;font-size:16px;border-inline:1px solid rgba(255,215,0,.3)}
+        .btn-gold{background:var(--g);color:#000;border:none;padding:15px 45px;font-weight:800;text-transform:uppercase;cursor:pointer;transition:.3s;margin-left:15px}
+        .container{padding:100px 8%;max-width:1400px;margin:0 auto}
+        .section-title{font-size:2.2em;font-weight:900;margin-bottom:10px;border-bottom:5px solid #000;padding-bottom:15px}
+        .season-tag{font-size:12px;font-weight:700;color:var(--a);letter-spacing:2px;text-transform:uppercase;margin-bottom:40px;display:block}
+        .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:40px}
+        .product-box{display:flex;flex-direction:column;position:relative}
+        .slide-wrapper{position:relative;width:100%;padding-top:130%;background:#f7f7f7;overflow:hidden;margin-bottom:15px}
+        .slide{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+        .slide.active{display:flex}
+        .slide img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+        .card-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.7);border:none;width:35px;height:35px;border-radius:50%;opacity:0;transition:.3s;z-index:10;cursor:pointer}
+        .product-box:hover .card-arrow{opacity:1} .c-arrow-left{left:10px} .c-arrow-right{right:10px}
+        .size-selector{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+        .size-btn{border:1px solid #ddd;background:#fff;padding:5px 10px;font:700 11px 'Inter';cursor:pointer;transition:.2s}
+        .size-btn.selected{background:#000;color:#fff;border-color:#000}
+        .size-btn.sold-out{color:#ccc;border-color:#eee;cursor:not-allowed;text-decoration:line-through}
+        .stock-dot{display:block;font-size:9px;font-weight:400;color:#999;margin-top:1px}
+        .low-stock .stock-dot{color:var(--a)}
+        .scarcity-bar{margin-bottom:10px}
+        .scarcity-text{font-size:10px;color:var(--a);font-weight:700;margin-bottom:4px}
+        .scarcity-track{background:#eee;height:3px;width:100%} .scarcity-fill{background:var(--a);height:3px;transition:width .3s}
+        .p-name{font-size:14px;font-weight:600;text-transform:uppercase} .p-price{font-size:17px;font-weight:900;margin-bottom:10px}
+        .btn-add-cart{background:#fff;color:#000;border:1px solid #000;padding:10px 0;width:100%;font-weight:700;text-transform:uppercase;cursor:pointer}
+        .btn-add-cart:hover:not(:disabled){background:#000;color:#fff} .btn-add-cart:disabled{background:#eee;color:#aaa;border-color:#eee;cursor:not-allowed}
+        .cart-item{display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:20px 0;align-items:flex-start}
+        .btn-remove-all{background:none;border:none;color:var(--a);font-size:10px;font-weight:700;text-transform:uppercase;cursor:pointer;text-decoration:underline}
+        .footer{background:#000;color:#fff;padding:80px 8% 40px} .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:40px}
+        .footer-links a{display:block;color:#999;text-decoration:none;margin-bottom:12px;font-size:14px}
+    </style>
+</head>
+<body onclick="handleClick(event)">
+    <div id="global-overlay" onclick="closeAll()"></div>
+
+    <div class="top-announcement">
+        <div class="announcement-track">
+            <div class="ann-segment">
+                <span class="ann-flash">⚡ Seasonal Drop</span><span class="ann-main">RetroGrail Store</span><span class="ann-dot">·</span>
+                <span class="ann-slogan">"Bring the whole world of football into your home"</span><span class="ann-dot">·</span>
+                <span class="ann-main">The Immortal Archive</span><span class="ann-dot">·</span><span class="ann-flash">⚽ Only 10 Per Size</span><span class="ann-dot">·</span>
+                <span class="ann-main">Free Shipping Over 3M VND</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="header">
+        <a href="#" class="logo">RetroGrail</a>
+        <div class="nav-container"><nav class="nav-links"><a href="#adults">Collection</a><a href="#secret">Secret Items</a><a href="#footer">The Story</a></nav></div>
+        <div class="header-right">
+            <div id="search-bar-container" class="popup"><input type="text" id="search-input" placeholder="What legend are you looking for?" onkeydown="if(event.key==='Enter') doSearch()"><span onclick="closeAll()" style="cursor:pointer">✕</span></div>
+            <span class="header-icon" onclick="togglePopup('search-bar-container', event)">🔍</span>
+            <span class="header-icon" onclick="togglePopup('user-modal', event)">👤</span>
+            <div class="cart-icon-container" onclick="togglePopup('cart-modal', event)">🛒<span class="cart-count" id="cart-count">0</span></div>
+            <span class="header-icon" onclick="togglePopup('season-menu', event)">☰</span>
+        </div>
+    </header>
+
+    <div id="user-modal" class="popup">
+        <h2 style="margin-bottom:20px">SIGN IN</h2>
+        <div class="google-btn"><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="18"> Sign in with Google</div>
+        <input type="text" class="login-field" placeholder="Email"><input type="password" class="login-field" placeholder="Password">
+        <button class="btn-login-submit">LOGIN</button>
+    </div>
+
+    <div id="season-menu" class="popup" style="display:none;flex-direction:column">
+        <button onclick="changeView('All')">All Legends</button>
+        <button onclick="changeView('Summer')">Summer Legacy</button>
+        <button onclick="changeView('Winter')">Winter Heritage</button>
+    </div>
+
+    <div id="cart-modal" class="popup" style="display:none;flex-direction:column">
+        <div style="display:flex;justify-content:space-between;border-bottom:2px solid #000;padding-bottom:15px"><h3>CART</h3><span onclick="closeAll()" style="cursor:pointer">✕ CLOSE</span></div>
+        <div id="cart-items-list" style="flex-grow:1;overflow-y:auto;margin:15px 0"></div>
+        <div style="font-weight:900;font-size:1.2em;display:flex;justify-content:space-between"><span>TOTAL:</span><span id="cart-total">0 VND</span></div>
+        <div style="display:flex;gap:10px;margin-top:20px"><button style="flex:2;background:#000;color:#fff;padding:15px;border:none">BUY NOW</button><button onclick="clearCart()" style="flex:1;background:#fff;border:1px solid #000">CLEAR</button></div>
+    </div>
+
+    <section class="hero-banner">
+        <div class="hero-content"><p>"Mang cả thế giới bóng đá vào ngôi nhà bạn"</p><h1>CHASE THE<br>LEGENDS</h1></div>
+        <div class="mosaic-container">
+            <div class="mosaic-item img-1"><img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80"></div>
+            <div class="mosaic-item img-2"><img src="https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?auto=format&fit=crop&w=800&q=80"></div>
+            <div class="mosaic-item img-3"><img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80"></div>
+            <div class="mosaic-item img-4"><img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80"></div>
+            <div class="mosaic-item img-5"><img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=800&q=80"></div>
+            <div class="mosaic-item img-6"><img src="https://images.unsplash.com/photo-1518091043644-c1d445ba67a0?auto=format&fit=crop&w=800&q=80"></div>
+        </div>
+    </section>
+
+    <section class="special-grid" id="secret">
+        <div class="secret-mosaic-container">
+            <div><img src="https://images.unsplash.com/photo-1556316384-12c3dd30f515?auto=format&fit=crop&w=500&q=80"></div>
+            <div><img src="https://images.unsplash.com/photo-1606925797300-0b35e9d1741e?auto=format&fit=crop&w=500&q=80"></div>
+            <div><img src="https://images.unsplash.com/photo-1510566337590-2fc1f21d0faa?auto=format&fit=crop&w=500&q=80"></div>
+        </div>
+        <div>
+            <h2 style="color:var(--g);font-size:3em">SECRET ITEMS</h2>
+            <p style="color:#aaa;margin-bottom:10px">Receive a random authentic jersey from top European leagues.</p>
+            <div style="font-size:1.5em;color:var(--g);font-weight:900">999,000 VND</div>
+            <div style="display:flex;margin-top:20px">
+                <div class="quantity-selector"><button onclick="chgSec(-1)">-</button><input type="number" id="sec-qty" value="0" readonly><button onclick="chgSec(1)">+</button></div>
+                <button class="btn-gold" onclick="addSec()">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="section-title" id="adults">Current Collection</div>
+        <span class="season-tag" id="season-display">🔥 The All-Time Legends</span>
+        <div id="adult-grid" class="grid"></div>
+    </main>
+
+    <footer class="footer" id="footer">
+        <div class="footer-grid">
+            <div><h2 class="logo" style="color:var(--g)">RetroGrail</h2><p style="color:#888;font-size:13px;margin-top:10px">Preserving the spirit of the beautiful game.</p></div>
+            <div class="footer-links"><h4 style="color:#fff;margin-bottom:15px">STORE</h4><a href="#adults">Collection</a><a href="#secret">Secret Drops</a></div>
+            <div class="footer-links"><h4 style="color:#fff;margin-bottom:15px">CONTACT</h4><a href="#">Hanoi, VN</a><a href="#">support@retrograil.com</a></div>
+        </div>
+    </footer>
+
+    <script>
+        const sizes = ["XS", "S", "M", "L", "XL", "2XL"], MAX = 10;
+        const raw = [
+            {id:1, name:"MU 1999 Home", price:2500000, img:"https://images.unsplash.com/photo-1599619351208-3e6c839d6828?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
+            {id:2, name:"Real 2002 Home", price:3000000, img:"https://images.unsplash.com/photo-1620051139886-905167664670?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
+            {id:3, name:"Brazil 2002 Home", price:1750000, img:"https://images.unsplash.com/photo-1553106918-51318041604c?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
+            {id:4, name:"AC Milan 2007", price:2100000, img:"https://images.unsplash.com/photo-1511886929837-354d827aae26?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
+            {id:5, name:"Germany 1990", price:2850000, img:"https://images.unsplash.com/photo-1560272564-c83b66b1ad12?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
+            {id:6, name:"Arsenal 2004", price:2400000, img:"https://images.unsplash.com/photo-1622165232447-574678216d5a?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
+            {id:7, name:"Argentina 1986", price:2950000, img:"https://images.unsplash.com/photo-1575361204480-aadea25e6e68?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
+            {id:8, name:"Barca 2009 Home", price:1950000, img:"https://images.unsplash.com/photo-1520113112170-4420ee93933c?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
+            {id:9, name:"France 1998", price:2250000, img:"https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
+            {id:10, name:"Liverpool 2005", price:1800000, img:"https://images.unsplash.com/photo-1518091043644-c1d445ba67a0?auto=format&fit=crop&w=800&h=1000&q=80", s:"Summer"},
+            {id:11, name:"Tottenham 2010", price:1650000, img:"https://images.unsplash.com/photo-1543351611-58f69d7c1781?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
+            {id:12, name:"Dortmund 2012", price:1550000, img:"https://images.unsplash.com/photo-1616606103915-cbc747833015?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
+            {id:13, name:"Chelsea 2012", price:1700000, img:"https://images.unsplash.com/photo-1524015348248-266567389143?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
+            {id:14, name:"Real 2011 Home", price:1850000, img:"https://images.unsplash.com/photo-1510051646601-9d512665764d?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
+            {id:15, name:"Juventus 2012", price:1600000, img:"https://images.unsplash.com/photo-1519861155730-0b5fbf0dd889?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
+            {id:16, name:"Inter 2010 Away", price:1750000, img:"https://images.unsplash.com/photo-1522778509133-f1e576c1f3d5?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
+            {id:17, name:"Ajax 2010 Home", price:1450000, img:"https://images.unsplash.com/photo-1606925797300-0b35e9d1741e?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
+            {id:18, name:"Germany 2013", price:1900000, img:"https://images.unsplash.com/photo-1551280857-2b9bbe52cf5a?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
+            {id:19, name:"Netherlands 2012", price:1800000, img:"https://images.unsplash.com/photo-1559160581-447545934149?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"},
+            {id:20, name:"Argentina WC 22", price:3500000, img:"https://images.unsplash.com/photo-1671537237096-7248316dfa9c?auto=format&fit=crop&w=800&h=1000&q=80", s:"Winter"}
+        ];
+
+        let view = 'All', search = "", stock = {}, cart = JSON.parse(localStorage.getItem('RG_Cart'))||[];
+
+        function togglePopup(id, e) {
+            if(e) e.stopPropagation();
+            const el = document.getElementById(id), isVis = el.style.display==='block'||el.style.display==='flex';
+            closeAll();
+            if(!isVis) {
+                el.style.display = (id==='cart-modal'||id==='season-menu')?'flex':'block';
+                if(id!=='search-bar-container') document.getElementById('global-overlay').style.display='block';
+                if(id==='cart-modal') renderCart();
+                if(id==='search-bar-container') document.getElementById('search-input').focus();
+            }
+        }
+        function closeAll() { document.querySelectorAll('.popup, #global-overlay').forEach(e => e.style.display='none'); }
+        function handleClick(e) { if(!e.target.closest('.popup') && !e.target.closest('.header-icon')) closeAll(); }
+        function doSearch() { search = document.getElementById('search-input').value.toLowerCase(); render(); closeAll(); }
+        function changeView(v) { view = v; document.getElementById('season-display').innerText = v==='All'?'🔥 All Legends':v==='Summer'?'☀️ Summer Legacy':'❄️ Winter Heritage'; render(); closeAll(); }
+
+        function initStock() {
+            let s = JSON.parse(localStorage.getItem('RG_Stock'))||{};
+            raw.forEach(p => sizes.forEach(sz => stock[`${p.id}_${sz}`] = s[`${p.id}_${sz}`] ?? MAX));
+        }
+        const getS = (id, sz) => stock[`${id}_${sz}`];
+        const saveAll = () => { localStorage.setItem('RG_Stock', JSON.stringify(stock)); localStorage.setItem('RG_Cart', JSON.stringify(cart)); updateCount(); }
+        const updateCount = () => document.getElementById('cart-count').innerText = cart.reduce((a,c)=>a+c.qty,0);
+
+        function selSize(btn, id) {
+            document.querySelectorAll(`#sizes-${id} .size-btn`).forEach(b=>b.classList.remove('selected'));
+            btn.classList.add('selected');
+            const b = document.getElementById(`btn-${id}`); b.disabled = false; b.innerText = 'Add to Cart';
+        }
+
+        function addCart(id) {
+            const sel = document.querySelector(`#sizes-${id} .selected`);
+            if(!sel) return;
+            const sz = sel.dataset.size, curS = getS(id, sz), item = raw.find(p=>p.id===id), key = `${id}_${sz}`;
+            if(curS <= 0) return alert('Sold out!');
+            let c = cart.find(x=>x.key===key);
+            if(c) { if(c.qty < curS) c.qty++; else return alert('Max stock reached'); }
+            else cart.push({...item, sz, key, qty:1});
+            stock[key]--; saveAll(); render();
+        }
+
+        function chgSec(v) { let i = document.getElementById('sec-qty'); i.value = Math.max(0, +i.value + v); }
+        function addSec() {
+            let q = +document.getElementById('sec-qty').value; if(q<=0) return;
+            let c = cart.find(x=>x.id===999);
+            if(c) c.qty+=q; else cart.push({id:999, name:"Secret Item", price:999000, key:'999', qty:q});
+            document.getElementById('sec-qty').value=0; saveAll(); renderCart();
+        }
+
+        function updateCart(k, d) {
+            let idx = cart.findIndex(c=>c.key===k), c = cart[idx];
+            if(c.qty+d <= 0) { if(c.id!==999) stock[k]+=c.qty; cart.splice(idx,1); }
+            else { if(c.id!==999 && d===1 && stock[k]<=0) return alert('No stock'); if(c.id!==999) stock[k]-=d; c.qty+=d; }
+            saveAll(); renderCart(); render();
+        }
+        function rmAll(k) { let c = cart.find(x=>x.key===k); if(c.id!==999) stock[k]+=c.qty; cart = cart.filter(x=>x.key!==k); saveAll(); renderCart(); render(); }
+        function clearCart() { if(confirm("Clear cart?")) { cart.forEach(c=>{if(c.id!==999) stock[c.key]+=c.qty}); cart=[]; saveAll(); renderCart(); render(); } }
+
+        function renderCart() {
+            let h = '', t = 0;
+            cart.forEach(c => { t+=c.price*c.qty; h+=`<div class="cart-item"><div><b>${c.name}</b> ${c.sz?`[${c.sz}]`:''}<br>${c.price.toLocaleString()} VND<br><button class="btn-remove-all" onclick="rmAll('${c.key}')">Remove</button></div><div style="display:flex;gap:10px;align-items:center"><button onclick="updateCart('${c.key}',-1)">-</button>${c.qty}<button onclick="updateCart('${c.key}',1)">+</button></div></div>`;});
+            document.getElementById('cart-items-list').innerHTML = h || '<p style="text-align:center;margin-top:20px;color:#888">Empty</p>';
+            document.getElementById('cart-total').innerText = t.toLocaleString() + ' VND';
+        }
+
+        function render() {
+            initStock(); updateCount();
+            const grid = document.getElementById('adult-grid');
+            let data = raw.filter(p => (view==='All'||p.s===view) && p.name.toLowerCase().includes(search));
+            grid.innerHTML = data.map(p => {
+                let tot = sizes.reduce((a,sz)=>a+getS(p.id,sz),0), pct = Math.floor((1-(tot/(sizes.length*MAX)))*100);
+                let btns = sizes.map(sz => {
+                    let s = getS(p.id, sz);
+                    return `<button class="size-btn ${s===0?'sold-out':s<=3?'low-stock':''}" onclick="selSize(this,${p.id})" data-size="${sz}" ${s===0?'disabled':''}>${sz}<span class="stock-dot">${s===0?'Out':s<=3?s+' left':''}</span></button>`;
+                }).join('');
+                return `<div class="product-box"><div class="slide-wrapper"><img src="${p.img}" style="width:100%;height:100%;object-fit:cover;position:absolute"></div><div class="p-name">${p.name}</div><div class="p-price">${p.price.toLocaleString()} VND</div><div class="scarcity-bar"><div class="scarcity-text">🔥 ${pct}% SOLD</div><div class="scarcity-track"><div class="scarcity-fill" style="width:${pct}%"></div></div></div><div class="size-selector" id="sizes-${p.id}">${btns}</div><button class="btn-add-cart" id="btn-${p.id}" onclick="addCart(${p.id})" disabled>Select Size</button></div>`;
+            }).join('') || `<p style="grid-column:1/-1;text-align:center;color:#888">No items found.</p>`;
+        }
+        window.onload = render;
+    </script>
+</body>
+</html>
