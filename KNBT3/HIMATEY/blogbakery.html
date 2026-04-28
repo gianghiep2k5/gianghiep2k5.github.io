@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog HIMATEY Bakery</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Be Vietnam Pro',sans-serif;
+    background:#f7f4ef;
+    color:#2c2c2c;
+    line-height:1.8;
+}
+
+.container{
+    width:1400px;
+    max-width:95%;
+    margin:auto;
+}
+
+header{
+    padding:28px 0;
+    border-bottom:1px solid #e8e0d5;
+    background:#f7f4ef;
+}
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:42px;
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    color:#0d442c;
+}
+
+.menu{
+    display:flex;
+    gap:40px;
+}
+
+.menu a{
+    text-decoration:none;
+    color:#444;
+    font-size:14px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.hero{
+    padding:60px 0;
+}
+
+.hero-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:45px;
+    align-items:center;
+}
+
+.hero img{
+    width:100%;
+    border-radius:24px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.08);
+}
+
+.tag{
+    color:#b38a2c;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:13px;
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-family:'Playfair Display',serif;
+    font-size:58px;
+    line-height:1.15;
+    color:#0d442c;
+    margin-bottom:25px;
+}
+
+.meta{
+    color:#777;
+    font-size:15px;
+}
+
+.section{
+    padding:40px 0;
+}
+
+.grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:45px;
+}
+
+.card{
+    background:white;
+    padding:35px;
+    border-radius:22px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.05);
+}
+
+h2{
+    font-family:'Playfair Display',serif;
+    font-size:34px;
+    color:#0d442c;
+    margin-bottom:18px;
+}
+
+h3{
+    font-size:22px;
+    color:#0d442c;
+    margin:22px 0 10px;
+}
+
+p{
+    margin-bottom:18px;
+    color:#555;
+}
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+    margin-top:20px;
+}
+
+.product{
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,0.05);
+}
+
+.product img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+}
+
+.product-content{
+    padding:20px;
+}
+
+.product h4{
+    font-size:22px;
+    color:#0d442c;
+    margin-bottom:10px;
+}
+
+.cta{
+    margin:70px 0;
+    background:linear-gradient(90deg,#0d442c,#1d6947);
+    padding:38px;
+    border-radius:24px;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.cta h2{
+    color:white;
+    margin:0;
+}
+
+.btn{
+    background:#d2a94a;
+    color:white;
+    text-decoration:none;
+    padding:16px 34px;
+    border-radius:50px;
+    font-weight:600;
+}
+
+footer{
+    padding:35px 0;
+    text-align:center;
+    color:#777;
+    border-top:1px solid #e5ddd2;
+    margin-top:50px;
+}
+
+@media(max-width:992px){
+.hero-grid,
+.grid-2,
+.product-grid{
+grid-template-columns:1fr;
+}
+
+.hero h1{
+font-size:42px;
+}
+
+.cta{
+flex-direction:column;
+text-align:center;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="container">
+<nav>
+<div class="logo">HIMATEY.</div>
+
+<div class="menu">
+<a href="#">Cửa hàng</a>
+<a href="#">Hộp quà</a>
+<a href="#">Blog</a>
+<a href="#">Liên hệ</a>
+</div>
+</nav>
+</div>
+</header>
+
+<section class="hero">
+<div class="container">
+<div class="hero-grid">
+
+<img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=1000&q=80">
+
+<div>
+<div class="tag">BLOG</div>
+<h1>Bánh Ngọt Ít Đường – Xu Hướng Thưởng Thức Mới Của Người Trẻ Hiện Đại</h1>
+<div class="meta">28.04.2026 | HIMATEY Bakery</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+<div class="grid-2">
+
+<div class="card">
+<h2>Mở đầu</h2>
+<p>Trong những năm gần đây, xu hướng tiêu dùng của khách hàng trẻ đã thay đổi rõ rệt. Người tiêu dùng hiện đại không chỉ tìm kiếm món ăn ngon mà còn quan tâm đến sức khỏe, trải nghiệm và cảm xúc.</p>
+
+<p>Đó là lý do vì sao bánh ngọt ít đường đang dần trở thành lựa chọn phổ biến của giới trẻ, dân văn phòng và những người theo đuổi lối sống cân bằng.</p>
+
+<p>Tại HIMATEY Bakery, chúng tôi tin rằng một chiếc bánh ngon không cần quá ngọt, mà cần đủ tinh tế để khiến người thưởng thức nhớ mãi.</p>
+</div>
+
+<div class="card">
+<h2>Vì sao bánh ít đường trở thành xu hướng?</h2>
+
+<h3>1. Giảm cảm giác ngấy</h3>
+<p>Bánh ít đường giúp vị giác thanh nhẹ và dễ ăn hơn.</p>
+
+<h3>2. Phù hợp lifestyle hiện đại</h3>
+<p>Khách hàng trẻ ưu tiên sức khỏe và vóc dáng.</p>
+
+<h3>3. Có thể thưởng thức thường xuyên</h3>
+<p>Sản phẩm cân bằng giúp khách hàng yên tâm hơn khi lựa chọn.</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+
+<h2 style="text-align:center;margin-bottom:35px;">Những sản phẩm nổi bật tại HIMATEY</h2>
+
+<div class="product-grid">
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=800&q=80">
+<div class="product-content">
+<h4>Tiramisu Signature</h4>
+<p>Lớp kem mascarpone mềm mịn kết hợp cacao nguyên chất.</p>
+</div>
+</div>
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=800&q=80">
+<div class="product-content">
+<h4>Bông lan trứng muối</h4>
+<p>Cốt bánh mềm xốp cùng vị mặn ngọt hài hòa.</p>
+</div>
+</div>
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80">
+<div class="product-content">
+<h4>Cheesecake nướng</h4>
+<p>Đậm vị phô mai nhưng vẫn thanh nhẹ, tinh tế.</p>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+<div class="grid-2">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=900&q=80" style="width:100%;border-radius:18px;margin-bottom:20px;">
+<h2>Khi bánh không chỉ là món ăn</h2>
+<p>Một chiếc bánh có thể là món quà nhỏ dành tặng người thương, lời cảm ơn đến đồng nghiệp hoặc phần thưởng cho chính mình sau ngày dài làm việc.</p>
+</div>
+
+<div class="card">
+<h2>Kết luận</h2>
+<p>Bánh ngọt ít đường không còn là xu hướng ngắn hạn mà đã trở thành lựa chọn tiêu dùng mới của người trẻ hiện đại.</p>
+
+<p>Nếu bạn đang tìm kiếm một thương hiệu bánh vừa ngon, vừa đẹp, vừa tinh tế thì HIMATEY Bakery là lựa chọn đáng trải nghiệm.</p>
+</div>
+
+</div>
+
+<div class="cta">
+<h2>Khám phá menu bánh mới nhất tại HIMATEY Bakery</h2>
+<a href="#" class="btn">Đặt bánh ngay</a>
+</div>
+
+</div>
+</section>
+
+<footer>
+HIMATEY Bakery © 2026 | Gói ghém tử tế, trao gửi yêu thương.
+</footer>
+
+</body>
+</html>
